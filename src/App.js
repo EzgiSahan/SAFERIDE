@@ -13,6 +13,9 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/forgetpassword" component={ForgetPassword} />
           <Route path="/setnewpassword" component={SetNewPassword} />
+          <Route path="/login231" component={Login} />
+          {/* To route to any path that you want we use the * sign in the paths along with the component */}
+          <Route path="*" component={Login} />
         </Switch>
     </Router>
   );
