@@ -27,6 +27,10 @@
     font-size: 22px;
 }
 
+.forget-pwd {
+    text-align: end;
+}
+
 #button {
     margin: 10% 10% 0% 10%;
     background-color: slategrey;

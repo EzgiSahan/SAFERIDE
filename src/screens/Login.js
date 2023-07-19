@@ -12,7 +12,6 @@ export const Login = () => {
                 <text>Transportation App</text>
         </header>
         <div className='login-container'>
-            
             <form className='login-form'>
                 <div class="form-group">
                     <label for="email">Email address:</label>
@@ -25,6 +24,9 @@ export const Login = () => {
                     <input type={password} class="form-control" id="pwd" placeholder='password' required 
                     onChange={(e)=>{
                         setPassword(e.target.value);}}/>
+                    <div className='forget-pwd'>
+                        <a href='/forgetpassword'>Forget Password?</a>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary" id="button">Submit</button>
                 <div class="form-group">
