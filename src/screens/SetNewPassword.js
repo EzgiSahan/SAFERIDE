@@ -9,14 +9,13 @@ export const SetNewPassword = () => {
     const getCharacterValidationError = (str) => {
         return `${str}`;
     };
-    
     const formSchema = Yup.object().shape({
         password: Yup.string()
           .required('Password is mendatory')
           .matches(/[a-z]/, getCharacterValidationError('Password must include one lowercase'))
           .matches(/[A-Z]/, getCharacterValidationError('Password must include one uppercase'))
-          .matches(/[^\w]]/, getCharacterValidationError('Password must include one special symbol')
-          ),
+          .matches(/[[0-9]/, getCharacterValidationError('Password must include one number'))
+          .matches(/[^\w]/, getCharacterValidationError('Password must include one special symbol')),
         confirmPwd: Yup.string()
           .required('Password is mendatory')
           .oneOf([Yup.ref('password')], 'Passwords does not match'),
@@ -32,7 +31,7 @@ export const SetNewPassword = () => {
 
     return(
         <div className='container'>
-            <header className='login-header'>
+            <header className='header'>
                 <text>Transportation App</text>
             </header>
             <div className='login-container'> 
@@ -62,7 +61,9 @@ export const SetNewPassword = () => {
                         placeholder='confirm password' required/>
                         <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="button">Reset Password</button>
+                    <a href='/donesetpassword'>
+                        <button type="submit" class="btn btn-primary" id="button">Reset Password</button>
+                    </a>
                 </form>
             </div>
         </div>

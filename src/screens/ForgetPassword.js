@@ -9,7 +9,7 @@ export const ForgetPassword = () => {
     
     return(
         <div className='container'>
-            <header className='login-header'>
+            <header className='header'>
                 <text>Transportation App</text>
             </header>
             <div className='login-container'>
@@ -22,11 +22,10 @@ export const ForgetPassword = () => {
                     <label for="email">Email address:</label>
                     <input type={email} class="form-control" id="email" placeholder='email' required 
                     onChange={(e)=>{
-                        setEmail(e.target.value);}}
-                    />
+                        setEmail(e.target.value);}}/>
                 </div>
                 <a href='/setnewpassword'>
-                    Reset Password
+                    <button type="submit" class="btn btn-primary" id="button">Reset Password</button>
                 </a>
                 </form>
             </div>

@@ -32,7 +32,7 @@ export const Signup = () => {
       
   return (
     <div className='container'>
-        <header className='login-header'>
+        <header className='header'>
                 <text>Transportation App</text>
         </header>
         <div className='login-container'>

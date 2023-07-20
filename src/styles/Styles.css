@@ -4,7 +4,7 @@
     background-color: slategrey;
 }
 
-.login-header {
+.header {
     padding: 3%;
     text-align: center;
     background-color: antiquewhite;
@@ -12,6 +12,9 @@
     font-size: 30px;
 }
 
+#home-header {
+    text-align: end;
+}
 .login-container {
     text-align: center;
     background-color: antiquewhite;
