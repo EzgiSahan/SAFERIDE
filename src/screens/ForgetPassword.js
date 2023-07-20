@@ -24,9 +24,7 @@ export const ForgetPassword = () => {
                     onChange={(e)=>{
                         setEmail(e.target.value);}}/>
                 </div>
-                <a href='/setnewpassword'>
-                    <button type="submit" class="btn btn-primary" id="button">Reset Password</button>
-                </a>
+                    <button type="submit" class="btn btn-primary" id="button"><a href='/setnewpassword'>Reset Password</a></button>
                 </form>
             </div>
         </div>

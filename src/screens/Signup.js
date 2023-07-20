@@ -64,7 +64,7 @@ export const Signup = () => {
                         validatePassword(e)
                     }}/>{passwordError && <h6 style={{color: 'red'}}>{passwordError}</h6>}
                 </div>
-                <button type="submit" class="btn btn-primary" id="button">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="button"><a href='/user'>Submit</a></button>
                 <div class="form-group">
                     <text>Already have an account? <a href='/login'>Login</a></text>
                 </div>

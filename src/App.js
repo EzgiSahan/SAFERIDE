@@ -6,6 +6,7 @@ import { Home } from './screens/Home';
 import { Login } from './screens/Login';
 import { SetNewPassword } from './screens/SetNewPassword';
 import { Signup } from './screens/Signup';
+import { User } from './screens/User';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/setnewpassword" component={SetNewPassword} />
           <Route path="/donesetpassword" component={DoneSetPassword} />
           <Route path="/login231" component={Login} />
+          <Route path="/user" component={User} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" component={Login} />
         </Switch>

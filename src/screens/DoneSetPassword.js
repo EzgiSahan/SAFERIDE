@@ -10,7 +10,7 @@ export const DoneSetPassword = () => {
             <div className='login-container'>
                 <h2>All done!</h2>
                 <h5>Your password has been reset.</h5>
-                <button type="submit" class="btn btn-primary" id="button">Go back to login</button>
+                <button type="submit" class="btn btn-primary" id="button"><a href='/login'>Go back to login</a></button>
             </div>
         </div>
     )

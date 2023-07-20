@@ -61,9 +61,7 @@ export const SetNewPassword = () => {
                         placeholder='confirm password' required/>
                         <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
                     </div>
-                    <a href='/donesetpassword'>
-                        <button type="submit" class="btn btn-primary" id="button">Reset Password</button>
-                    </a>
+                    <button type="submit" class="btn btn-primary" id="button"><a href='/donesetpassword'>Reset Password</a></button>
                 </form>
             </div>
         </div>
