@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import '../styles/Styles.css'
 
 
 export const ForgetPassword = () => {

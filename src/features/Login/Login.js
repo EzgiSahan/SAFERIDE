@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../styles/Styles.css'
+import '../../assets/styles/Styles.css'
 
 
 export const Login = () => {
@@ -29,7 +29,7 @@ export const Login = () => {
                             <a href='/forgetpassword'>Forget Password?</a>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="button"><a href='/user'>Submit</a></button>
+                    <button type="submit" class="btn btn-primary" id="button"><a href='/profile'>Submit</a></button>
                     <div class="form-group">
                         <text>Create new account <a href='/signup'>Signup</a></text>
                     </div>

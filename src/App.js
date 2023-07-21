@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { DoneSetPassword } from './screens/DoneSetPassword';
-import { ForgetPassword } from './screens/ForgetPassword';
-import { Home } from './screens/Home';
-import { Login } from './screens/Login';
-import { SetNewPassword } from './screens/SetNewPassword';
-import { Signup } from './screens/Signup';
-import { User } from './screens/User';
+import { ResetPasswordSuccess } from './features/ResetPassword/ResetPasswordSuccess';
+import { ForgetPassword } from './features/ResetPassword/ForgetPassword';
+import { Home } from './features/Home/Home';
+import { Login } from './features/Login/Login';
+import { SetNewPassword } from './features/ResetPassword/SetNewPassword';
+import { Signup } from './features/Signup/Signup';
+import { User } from './features/Profile/Profile';
+import { ResetPasswordFail } from './features/ResetPassword/ResetPasswordFail';
 
 const App = () => {
   return (
@@ -15,11 +16,11 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route path="/forgetpassword" component={ForgetPassword} />
-          <Route path="/setnewpassword" component={SetNewPassword} />
-          <Route path="/donesetpassword" component={DoneSetPassword} />
-          <Route path="/login231" component={Login} />
-          <Route path="/user" component={User} />
+          <Route path="/forget-password" component={ForgetPassword} />
+          <Route path="/reset-password" component={SetNewPassword} />
+          <Route path="/reset-password-success" component={ResetPasswordSuccess} />
+          <Route path="/reset-password-fail" component={ResetPasswordFail} />
+          <Route path="/profile" component={User} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" component={Login} />
         </Switch>

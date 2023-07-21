@@ -1,12 +1,11 @@
 import React from 'react'
-import '../styles/Styles.css'
-import { Dashboard } from '../comman/Dashboard'
+import { Dashboard } from '../../components/Dashboard'
 
 
 export const User = () => {
     return (
         <div style={({ display: "flex" })}>
-            {Dashboard()}
+            <Dashboard/>
             <main className='profile-container'>
                 <header>
                     <h1>Welcome Name!</h1>

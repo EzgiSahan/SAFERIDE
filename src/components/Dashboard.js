@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/Styles.css'
+import '../assets/styles/Styles.css'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
