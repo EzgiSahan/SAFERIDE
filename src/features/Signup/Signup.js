@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import validator from 'validator'
-
+import { validateEmail } from '../../utils/validateEmail';
 
 export const Signup = () => {
     const [name,setName] = useState('');
@@ -9,14 +9,14 @@ export const Signup = () => {
     const [emailError, setEmailError] = useState('');
 
 
-    const validateEmail = (e) => {
-        var email = e.target.value;
-        if (validator.isEmail(email)) {
-            setEmailError('');
-        } else {
-          setEmailError('Invalid email. Please enter a valid email address.');
-        }
-    };
+    // const validateEmail = (e) => {
+    //     var email = e.target.value;
+    //     if (validator.isEmail(email)) {
+    //         setEmailError('');
+    //     } else {
+    //       setEmailError('Invalid email. Please enter a valid email address.');
+    //     }
+    // };
 
     const validatePassword = (e) => {
         var password = e.target.value;
@@ -53,7 +53,7 @@ export const Signup = () => {
                     <label for="email">Email address:</label>
                     <input type="email" class="form-control" id="email" placeholder='email' required
                     onChange={(e) => {
-                        validateEmail(e)
+                        setEmailError(validateEmail(e));
                     }}/>{emailError && <h6 style={{color: 'red'}}>{emailError}</h6>}
                 </div>
                 <div class="form-group">
