@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../../assets/styles/Styles.css'
+import Example from '../../components/Example';
 
 
 export const Login = () => {
@@ -8,7 +9,8 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     
     return (
-        <div className='container'>
+        <>
+        <div className='main-container'>
             <header className='header'>
                 <text>Transportation App</text>
             </header>
@@ -36,5 +38,7 @@ export const Login = () => {
                 </form>
             </div>
         </div>
+        </>
+
     )
 }
