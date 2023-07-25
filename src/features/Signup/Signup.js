@@ -1,41 +1,25 @@
 import React, { useState } from 'react'
-import validator from 'validator'
 import { validateEmail } from '../../utils/validateEmail';
+import { validatePassword } from '../../utils/validatePassword';
+import { useNavigate } from 'react-router-dom';
 
 export const Signup = () => {
     const [name,setName] = useState('');
     const [surname, setSurname] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
-
-
-    // const validateEmail = (e) => {
-    //     var email = e.target.value;
-    //     if (validator.isEmail(email)) {
-    //         setEmailError('');
-    //     } else {
-    //       setEmailError('Invalid email. Please enter a valid email address.');
-    //     }
-    // };
-
-    const validatePassword = (e) => {
-        var password = e.target.value;
-        if (validator.isStrongPassword(password)) {
-            setPasswordError('');
-        } else {
-          setPasswordError(
-            'Invalid password. It must include one uppercase letter, one lowercase letter, one number and one special symbol'
-          );
-        }
+    const navigate = useNavigate();
+    const handleSubmit = () => {
+        navigate('/user')
     };
       
   return (
-    <div className='container'>
+    <div className='main-container'>
         <header className='header'>
                 <text>Transportation App</text>
         </header>
         <div className='login-container'>
-            <form className='login-form'>
+            <form className='login-form' onSubmit={handleSubmit}>
                <div class="form-group">
                     <label for="name">Name:</label>
                     <input type={name} class="form-control" id="email" placeholder='name' required
@@ -60,10 +44,10 @@ export const Signup = () => {
                     <label for="pwd">Password:</label>
                     <input type="password" class="form-control" id="pwd" placeholder='password' required
                     onChange={(e) => {
-                        validatePassword(e)
+                        setPasswordError(validatePassword(e));
                     }}/>{passwordError && <h6 style={{color: 'red'}}>{passwordError}</h6>}
                 </div>
-                    <button type="submit" class="btn btn-primary" id="button"><a href='/profile'>Submit</a></button>
+                    <button type="submit" class="btn btn-primary" id="button">Submit</button>
                 <div class="form-group">
                     <text>Already have an account? <a href='/login'>Login</a></text>
                 </div>

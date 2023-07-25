@@ -1,15 +1,13 @@
 import React from 'react'
-import { Dashboard } from '../../components/Dashboard'
+import { AdminDashboard } from '../../components/Dashboard'
+import { NavBar } from '../../components/Navbar'
 
-
-export const User = () => {
+export const Admin = () => {
     return (
         <div style={({ display: "flex" })}>
-            <Dashboard/>
-            <main className='profile-container'>
-                <header>
-                    <h1>Welcome Name!</h1>
-                </header>
+            <AdminDashboard/>
+            <main>
+                <NavBar/>
                 <div className='profile-div'>
                     <img src="https://reactjs.org/logo-og.png" alt="profile" className='profile-img'></img>
                     <div className='user-info-container'>

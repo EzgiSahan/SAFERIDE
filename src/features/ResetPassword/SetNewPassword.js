@@ -11,6 +11,7 @@ export const SetNewPassword = () => {
     const formSchema = Yup.object().shape({
         password: Yup.string()
           .required('Password is mendatory')
+          .min(8, 'Password must be at least 8 characters')
           .matches(/[a-z]/, getCharacterValidationError('Password must include one lowercase'))
           .matches(/[A-Z]/, getCharacterValidationError('Password must include one uppercase'))
           .matches(/[[0-9]/, getCharacterValidationError('Password must include one number'))
@@ -29,7 +30,7 @@ export const SetNewPassword = () => {
     }
 
     return(
-        <div className='container'>
+        <div className='main-container'>
             <header className='header'>
                 <text>Transportation App</text>
             </header>
@@ -60,7 +61,7 @@ export const SetNewPassword = () => {
                         placeholder='confirm password' required/>
                         <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="button"><a href='/donesetpassword'>Reset Password</a></button>
+                    <button type="submit" class="btn btn-primary" id="button"><a href='/reset-password-success'>Reset Password</a></button>
                 </form>
             </div>
         </div>

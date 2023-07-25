@@ -1,16 +1,22 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export const ResetPasswordSuccess = () => {
+    const navigate = useNavigate();
+    const handleSubmit = () => {
+        navigate('/login')
+    };
+
     return (
-        <div className='container'>
+        <div className='main-container'>
             <header className='header'>
                 <text>Transportation App</text>
             </header>
-            <div className='login-container'>
+            <form className='login-container' onSubmit={handleSubmit}>
                 <h2>All done!</h2>
                 <h5>Your password has been reset.</h5>
-                <button type="submit" class="btn btn-primary" id="button"><a href='/login'>Go back to login</a></button>
-            </div>
+                <button type="submit" class="btn btn-primary" id="button">Go back to login</button>
+            </form>
         </div>
     )
 }

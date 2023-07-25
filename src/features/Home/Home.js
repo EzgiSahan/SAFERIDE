@@ -3,7 +3,7 @@ import '../../assets/styles/Styles.css'
 
 export const Home = () => {
     return (
-        <div className='container'>
+        <div className='main-container'>
             <header className='header' id='home-header'>
                 <a href='/signup'>
                     <button button type="submit" class="btn btn-primary" >Sign up</button>

@@ -23,6 +23,10 @@
 .form-group {
     padding: 10% 10% 0% 10%;
 }
+
+#form-group-profile {
+    text-align: left;
+}
 .form-control {
     border: 2px;
     border-radius: 15px;
@@ -39,20 +43,23 @@
     border-color: slategrey;
 }
 
-.profile-container {
-    margin: 40px;
-}
-
 .profile-div {
-    width: 80%;
+    width: 60%;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-bottom: 25px;
+    margin: 40px;
+}
+.profile {
+    width: 100%;
 }
 .profile-img {
     width: 100%;
 }
 .user-info-container {
-    text-align: center;
     padding: 10px 20px;
-  }
+    text-align: center;
+}
+
+.table {
+    margin-top: 40px;
+}

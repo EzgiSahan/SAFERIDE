@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import '../../assets/styles/Styles.css'
-import Example from '../../components/Example';
-
 
 export const Login = () => {
 
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+
+    let navigate = useNavigate();    
+    const handleSubmit = () => {
+        navigate('/admin');
+    };
+
     return (
         <>
         <div className='main-container'>
@@ -15,7 +19,7 @@ export const Login = () => {
                 <text>Transportation App</text>
             </header>
             <div className='login-container'>
-                <form className='login-form'>
+                <form className='login-form' onSubmit={handleSubmit}>
                     <div class="form-group">
                         <label for="email">Email address:</label>
                         <input type={email} class="form-control" id="email" placeholder='email' required 
@@ -28,10 +32,10 @@ export const Login = () => {
                         onChange={(e)=>{
                             setPassword(e.target.value);}}/>
                         <div className='forget-pwd'>
-                            <a href='/forgetpassword'>Forget Password?</a>
+                            <a href='/forget-password'>Forget Password?</a>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="button"><a href='/profile'>Submit</a></button>
+                    <button type="submit" class="btn btn-primary" id="button">Submit</button>
                     <div class="form-group">
                         <text>Create new account <a href='/signup'>Signup</a></text>
                     </div>
@@ -39,6 +43,5 @@ export const Login = () => {
             </div>
         </div>
         </>
-
     )
 }
