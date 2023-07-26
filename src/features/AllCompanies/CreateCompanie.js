@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AdminDashboard } from '../../components/Dashboard';
-import { NavBar } from '../../components/Navbar';
+import { NavBar } from '../../components/LoggedNavbar';
 import { array } from '../AllUsers/Array';
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';

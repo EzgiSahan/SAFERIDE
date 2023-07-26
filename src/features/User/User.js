@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dashboard } from '../../components/Dashboard'
-import { NavBar } from '../../components/Navbar'
+import { NavBar } from '../../components/LoggedNavbar'
 
 export const User = () => {
     return (

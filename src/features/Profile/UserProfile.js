@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/validateEmail';
 import { validatePassword } from '../../utils/validatePassword';
 import UpdateChildModal from '../../components/UpdateChildModal';
-import { NavBar } from '../../components/Navbar';
+import { NavBar } from '../../components/LoggedNavbar';
 
 export const UserProfile = () => {
     const [name,setName] = useState('');

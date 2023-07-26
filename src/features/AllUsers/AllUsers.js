@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { NavBar } from '../../components/Navbar'
+import { NavBar } from '../../components/LoggedNavbar'
 import { AdminDashboard } from '../../components/Dashboard'
 import { Link, useNavigate } from 'react-router-dom';
 import { array } from './Array';

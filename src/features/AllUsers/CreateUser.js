@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { Link, useNavigate } from 'react-router-dom';
 import { array } from './Array';
 import { AdminDashboard } from '../../components/Dashboard';
-import { NavBar } from '../../components/Navbar';
+import { NavBar } from '../../components/LoggedNavbar';
 
 export function CreateUser() {
 

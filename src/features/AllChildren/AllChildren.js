@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import { AdminDashboard } from '../../components/Dashboard';
-import { NavBar } from '../../components/Navbar';
+import { NavBar } from '../../components/LoggedNavbar';
 import { array } from '../AllUsers/Array';
 import UpdateModal from '../../components/UpdateModal';
 

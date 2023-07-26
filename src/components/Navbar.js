@@ -1,35 +1,26 @@
-import { Container, Navbar, Nav } from 'react-bootstrap'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
-import { IconButton } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/joy/Button';
+import Logo from '../assets/images/logo-no-background.png';
+import LanguageIcon from '@mui/icons-material/Language';
+import { useNavigate } from 'react-router-dom';
 
-export function NavBar() {
-    return (
-        <>
-        <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-                <Navbar.Brand>
-                    Transporation App
-                </Navbar.Brand>
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="/admin">Home</Nav.Link>
-                        <Nav.Link href="/admin-profile">Profile</Nav.Link>
-                    </Nav>
-                    <Tooltip title="Account settings">
-                        <IconButton>
-                            <AccountCircleIcon size={100}></AccountCircleIcon>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Translate this page">
-                        <IconButton>
-                            <GTranslateIcon size={100}></GTranslateIcon>
-                        </IconButton>
-                    </Tooltip>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-        </>
-    );
+export const Navbar = () => {
+  const navigate = useNavigate();
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar sx={{backgroundColor:'#FFFF', padding:1}} position="static">
+        <Toolbar >
+        <img style={{padding:5,width:'100px', height:'auto'}} src={Logo}/>
+        <Typography variant="h6" component="div" sx={{ color:'black',flexGrow: 1 }}>  </Typography>
+          <Button onClick={() =>navigate('/signup')} sx={{marginRight:2}} color="primary">Sign up</Button>
+          <Button onClick={() =>navigate('/login')} color="primary" variant="soft"> Login </Button>
+          <LanguageIcon  sx={{color:'#007bff',marginLeft:2,height:'30px',width:'30px'}}/>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
 }
