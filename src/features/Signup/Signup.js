@@ -1,58 +1,180 @@
 import React, { useState } from 'react'
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { validateEmail } from '../../utils/validateEmail';
 import { validatePassword } from '../../utils/validatePassword';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
+const defaultTheme = createTheme();
 
 export const Signup = () => {
     const [name,setName] = useState('');
     const [surname, setSurname] = useState('');
+    const [country, setCounrty] = useState('');
+    const [city, setCity] = useState('');
+    const [adress, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+
+
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
     const navigate = useNavigate();
-    const handleSubmit = () => {
+
+    const handleSubmit = (event) => {
         navigate('/user')
     };
       
   return (
-    <div className='main-container'>
-        <header className='header'>
-                <text>Transportation App</text>
-        </header>
-        <div className='login-container'>
-            <form className='login-form' onSubmit={handleSubmit}>
-               <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type={name} class="form-control" id="email" placeholder='name' required
+    <>
+        <Navbar/>
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+            sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Sign up
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        name="FirstName"
+                        required
+                        fullWidth
+                        id="FirstName"
+                        label="First Name"
                         onChange={(e)=>{
-                        setName(e.target.value);}}/>
-                </div>
-                <div class="form-group">
-                    <label for={surname}>Surname:</label>
-                    <input type="surname" class="form-control" id="email" placeholder='surname' required
-                    onChange={(e)=>{
-                        setSurname(e.target.value);
-                    }}/>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email address:</label>
-                    <input type="email" class="form-control" id="email" placeholder='email' required
-                    onChange={(e) => {
-                        setEmailError(validateEmail(e));
-                    }}/>{emailError && <h6 style={{color: 'red'}}>{emailError}</h6>}
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder='password' required
-                    onChange={(e) => {
-                        setPasswordError(validatePassword(e));
-                    }}/>{passwordError && <h6 style={{color: 'red'}}>{passwordError}</h6>}
-                </div>
-                    <button type="submit" class="btn btn-primary" id="button">Submit</button>
-                <div class="form-group">
-                    <text>Already have an account? <a href='/login'>Login</a></text>
-                </div>
-            </form>
-        </div>
-    </div>
+                            setName(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="LastName"
+                        label="Last Name"
+                        name="LastName"
+                        onChange={(e)=>{
+                            setSurname(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        name="Country"
+                        required
+                        fullWidth
+                        id="Country"
+                        label="Country"
+                        onChange={(e)=>{
+                            setCounrty(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="City"
+                        label="City"
+                        name="City"
+                        onChange={(e)=>{
+                            setCity(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="Adress"
+                        label="Address"
+                        name="Adress"
+                        onChange={(e)=>{
+                            setAddress(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        name="Phone"
+                        required
+                        fullWidth
+                        type='tel'
+                        id="Phone"
+                        label="Phone"
+                        onChange={(e)=>{
+                            setPhone(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="BirthDate"
+                        label="Birth Date"
+                        name="BirthDate"
+                        onChange={(e)=>{
+                            setBirthDate(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="Email"
+                        label="Email Address"
+                        name="Email"
+                        onChange={(e)=>{
+                            setEmailError(validateEmail(e));}}/>{emailError && <h6>{emailError}</h6>}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                        required
+                        fullWidth
+                        name="Eassword"
+                        label="Password"
+                        type="Password"
+                        id="Eassword"
+                        onChange={(e)=>{
+                            setPasswordError(validatePassword(e));}}/>{passwordError && <h6>{passwordError}</h6>}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControlLabel
+                        control={<Checkbox value="allowExtraEmails" color="primary" />}
+                        label="I want to receive inspiration, marketing promotions and updates via email."/>
+                    </Grid>
+                </Grid>
+                <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}>
+                Sign Up
+                </Button>
+                <Grid container justifyContent="flex-end">
+                    <Grid item>
+                        <Link href="sign-in" variant="body2">
+                            Already have an account? Sign in
+                        </Link>
+                    </Grid>
+                </Grid>
+            </Box>
+            </Box>
+            </Container>
+        </ThemeProvider>
+        <Footer/>
+    </>
   )
 }
