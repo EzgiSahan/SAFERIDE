@@ -2,6 +2,20 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
+import { useNavigate } from 'react-router-dom';
+
+const defaultTheme = createTheme();
 
 export const SetNewPassword = () => {
 
@@ -23,47 +37,70 @@ export const SetNewPassword = () => {
     const formOptions = { resolver: yupResolver(formSchema) }
     const { register, handleSubmit, formState } = useForm(formOptions)
     const { errors } = formState
+    const navigate = useNavigate();
 
     function onSubmit(data) {
         console.log(JSON.stringify(data, null, 4))
+        navigate('/reset-password-success');
         return false
     }
 
     return(
-        <div className='main-container'>
-            <header className='header'>
-                <text>Transportation App</text>
-            </header>
-            <div className='login-container'> 
-                <div>
-                    <h1>Set New Password</h1>
-                    <h4>We'll send you reset instructions.</h4>
-                </div>
-                <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input 
-                        name='password'
-                        type='password'
-                        {...register('password')} 
-                        class={`form-control ${errors.password ? 'is-invalid' : ''}`} 
-                        placeholder='password' 
-                        required/>
-                        <div className="invalid-feedback">{errors.password?.message}</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Confirm Password:</label>
-                        <input 
-                        name='confirmPwd'
-                        type='password'  
-                        {...register('confirmPwd')} 
-                        class={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
-                        placeholder='confirm password' required/>
-                        <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="button"><a href='/reset-password-success'>Reset Password</a></button>
-                </form>
-            </div>
-        </div>
+        <>
+            <Navbar/>
+            <ThemeProvider theme={defaultTheme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',}}>
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Set New Password
+                            </Typography>
+                            <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+                                <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="password"
+                                label="Password"
+                                name="password"
+                                className={`form-control ${errors.password ? 'is-invalid' : ''}`} 
+                                {...register('password')} 
+                                type="password"
+                                autoComplete="password"
+                                autoFocus/>
+                                {errors.password?.message}
+                                <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="confirmPwd"
+                                label="Confirm Password"
+                                {...register('confirmPwd')} 
+                                type="password"
+                                id="password"
+                                className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
+                                autoComplete="current-password"/>
+                                {errors.confirmPwd?.message}
+                                <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}>
+                                    Submit
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Container>
+                </ThemeProvider>
+            <Footer/>
+        </>  
     )
 }

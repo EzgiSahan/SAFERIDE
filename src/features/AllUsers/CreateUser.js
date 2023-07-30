@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuid } from 'uuid';
 import { Link, useNavigate } from 'react-router-dom';
 import { array } from './Array';
-import { AdminDashboard } from '../../components/Dashboard';
-import { NavBar } from '../../components/LoggedNavbar';
+import { AdminDashboard } from '../../components/AdminDashboard';
+import { Box } from '@mui/material';
 
 export function CreateUser() {
 
@@ -28,52 +28,49 @@ export function CreateUser() {
 	}
 
 	return (
-		<div style={{ display: "flex" }}>
+		<Box sx={{ display: "flex" }}>
 			<AdminDashboard/>
-			<main className='profile'>
-			    <NavBar/>
-			    <Form className="d-grid gap-2"
-				    style={{ margin: '15rem' }}>
-				    <Form.Group className="mb-3"
-					    controlId="formBasicName">
-					    <Form.Control onChange=
-						    {e => setName(e.target.value)}
-						    type="text"
-						    placeholder="Name" required />
-				    </Form.Group>
-					<Form.Group className="mb-3"
-					    controlId="formBasicSurname">
-					    <Form.Control onChange=
-						    {e => setSurname(e.target.value)}
-						    type="text"
-						    placeholder="Surname" required />
-				    </Form.Group>
-				    <Form.Group className="mb-3"
-					    controlId="formBasicEmail">
-					    <Form.Control onChange=
-						    {e => setEmail(e.target.value)}
-						    type="text"
-						    placeholder="Email" required />
-				    </Form.Group>
-					<Form.Group className="mb-3"
-					    controlId="formBasicPhone">
-					    <Form.Control onChange=
-						    {e => setPhone(e.target.value)}
-						    type="text"
-						    placeholder="Contact Number" required />
-				    </Form.Group>
-				    <Button
-					    onClick={e => handelSubmit(e)}
-					    variant="primary" type="submit">
+			<Form className="d-grid gap-2"
+				style={{ margin: '15rem' }}>
+				<Form.Group className="mb-3"
+					controlId="formBasicName">
+					<Form.Control onChange=
+						{e => setName(e.target.value)}
+						type="text"
+						placeholder="Name" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicSurname">
+					<Form.Control onChange=
+						{e => setSurname(e.target.value)}
+						type="text"
+						placeholder="Surname" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicEmail">
+					<Form.Control onChange=
+						{e => setEmail(e.target.value)}
+						type="text"
+						placeholder="Email" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicPhone">
+					<Form.Control onChange=
+						{e => setPhone(e.target.value)}
+						type="text"
+						placeholder="Contact Number" required />
+				</Form.Group>
+				<Button
+					onClick={e => handelSubmit(e)}
+					variant="primary" type="submit">
 					    Submit
-				    </Button>
-				    <Link className="d-grid gap-2" to='/all-users'>
-					    <Button variant="info" size="lg">
-						    Cancel
-					    </Button>
-				    </Link>
-			    </Form>
-			</main>
-		</div>
+				</Button>
+				<Link className="d-grid gap-2" to='/all-users'>
+					<Button variant="info" size="lg">
+						Cancel
+					</Button>
+				</Link>
+			</Form>
+		</Box>
 	)
 }

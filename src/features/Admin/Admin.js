@@ -1,23 +1,45 @@
-import React from 'react'
-import { AdminDashboard } from '../../components/Dashboard'
-import { NavBar } from '../../components/LoggedNavbar'
+import { Box, Container, Toolbar } from "@mui/material";
+import React from "react";
+import { AdminDashboard } from "../../components/AdminDashboard";
 
 export const Admin = () => {
-    return (
-        <div style={({ display: "flex" })}>
-            <AdminDashboard/>
-            <main>
-                <NavBar/>
-                <div className='profile-div'>
-                    <img src="https://reactjs.org/logo-og.png" alt="profile" className='profile-img'></img>
-                    <div className='user-info-container'>
-                        <p>First Name</p>
-                        <p>Last Name</p> 
-                        <p>Email Adress</p>
-                        <p>Contact Number</p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    )
-}
+  return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+        }}
+      >
+        <AdminDashboard />
+        <Box
+          sx={{
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Toolbar />
+          <Container>
+            <div className="profile-div">
+              <img
+                src="https://reactjs.org/logo-og.png"
+                alt="profile"
+                className="profile-img"
+              ></img>
+              <div className="user-info-container">
+                <p>First Name</p>
+                <p>Last Name</p>
+                <p>Email Adress</p>
+                <p>Contact Number</p>
+              </div>
+            </div>
+          </Container>
+        </Box>
+      </Box>
+    </>
+  );
+};

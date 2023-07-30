@@ -1,10 +1,10 @@
+import { Box } from '@mui/material';
 import {React, useState} from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AdminDashboard } from '../../components/Dashboard';
-import { NavBar } from '../../components/LoggedNavbar';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import { AdminDashboard } from '../../components/AdminDashboard';
 import { array } from '../AllUsers/Array';
 
 export const CreateTrip = () => {
@@ -26,52 +26,49 @@ export const CreateTrip = () => {
 	}
 
 	return (
-		<div style={{ display: "flex" }}>
+		<Box sx={{ display: "flex" }}>
 			<AdminDashboard/>
-			<main className='profile'>
-			    <NavBar/>
-			    <Form className="d-grid gap-2"
-				    style={{ margin: '15rem' }}>
-				    <Form.Group className="mb-3"
-					    controlId="formBasicName">
-					    <Form.Control onChange=
-						    {e => setName(e.target.value)}
-						    type="text"
-						    placeholder="Name" required />
-				    </Form.Group>
-					<Form.Group className="mb-3"
-					    controlId="formBasicSurname">
-					    <Form.Control onChange=
-						    {e => setSurname(e.target.value)}
-						    type="text"
-						    placeholder="Surname" required />
-				    </Form.Group>
-				    <Form.Group className="mb-3"
-					    controlId="formBasicEmail">
-					    <Form.Control onChange=
-						    {e => setEmail(e.target.value)}
-						    type="text"
-						    placeholder="Email" required />
-				    </Form.Group>
-					<Form.Group className="mb-3"
-					    controlId="formBasicPhone">
-					    <Form.Control onChange=
-						    {e => setPhone(e.target.value)}
-						    type="text"
-						    placeholder="Contact Number" required />
-				    </Form.Group>
-				    <Button
-					    onClick={e => handelSubmit(e)}
-					    variant="primary" type="submit">
-					    Submit
-				    </Button>
-				    <Link className="d-grid gap-2" to='/all-users'>
-					    <Button variant="info" size="lg">
-						    Cancel
-					    </Button>
-				    </Link>
-			    </Form>
-			</main>
-		</div>
+		    <Form className="d-grid gap-2"
+				style={{ margin: '15rem' }}>
+				<Form.Group className="mb-3"
+					controlId="formBasicName">
+					<Form.Control onChange=
+						{e => setName(e.target.value)}
+						type="text"
+						placeholder="Name" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicSurname">
+					<Form.Control onChange=
+						{e => setSurname(e.target.value)}
+						type="text"
+						placeholder="Surname" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicEmail">
+					<Form.Control onChange=
+						{e => setEmail(e.target.value)}
+						type="text"
+						placeholder="Email" required />
+				</Form.Group>
+				<Form.Group className="mb-3"
+					controlId="formBasicPhone">
+					<Form.Control onChange=
+						{e => setPhone(e.target.value)}
+						type="text"
+						placeholder="Contact Number" required />
+				</Form.Group>
+				<Button
+					onClick={e => handelSubmit(e)}
+					variant="primary" type="submit">
+					Submit
+				</Button>
+				<Link className="d-grid gap-2" to='/all-users'>
+					<Button variant="info" size="lg">
+						Cancel
+					</Button>
+				</Link>
+			</Form>
+		</Box>
 	)
 }

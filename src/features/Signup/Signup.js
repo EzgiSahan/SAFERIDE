@@ -24,18 +24,46 @@ export const Signup = () => {
     const [surname, setSurname] = useState('');
     const [country, setCounrty] = useState('');
     const [city, setCity] = useState('');
-    const [adress, setAddress] = useState('');
+    const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [birthDate, setBirthDate] = useState('');
+    const [role, setRole] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
 
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        navigate('/user')
+    const handleSubmit = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            "name": name,
+            "surname": surname,
+            "email": email,
+            "phone": phone,
+            "password": password,
+            "role": role,
+            "country": country,
+            "city": city,
+            "address": address,
+            "birthdate": birthDate
+        });
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        fetch("http://localhost:8000/api/users", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+        navigate('/admin')
     };
+    
       
   return (
     <>
@@ -137,7 +165,9 @@ export const Signup = () => {
                         label="Email Address"
                         name="Email"
                         onChange={(e)=>{
-                            setEmailError(validateEmail(e));}}/>{emailError && <h6>{emailError}</h6>}
+                            setEmailError(validateEmail(e));
+                            setEmail(e.target.value);
+                            }}/>{emailError && <h6>{emailError}</h6>}
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -146,9 +176,21 @@ export const Signup = () => {
                         name="Eassword"
                         label="Password"
                         type="Password"
-                        id="Eassword"
+                        id="Password"
                         onChange={(e)=>{
-                            setPasswordError(validatePassword(e));}}/>{passwordError && <h6>{passwordError}</h6>}
+                            setPasswordError(validatePassword(e));
+                            setPassword(e.target.value);
+                            }}/>{passwordError && <h6>{passwordError}</h6>}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="Role"
+                        label="Role"
+                        name="Role"
+                        onChange={(e)=>{
+                            setRole(e.target.value);}}/>
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel

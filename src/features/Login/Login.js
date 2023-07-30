@@ -26,7 +26,23 @@ export const Login = () => {
 
     let navigate = useNavigate();    
     const handleSubmit = () => {
-        navigate('/admin');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            "email": email,
+            "password": password
+        });
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        fetch("localhost:8000/auth/login", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+        navigate('/user')
     };
 
     return (
@@ -46,7 +62,7 @@ export const Login = () => {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            Login
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
@@ -68,7 +84,7 @@ export const Login = () => {
                             fullWidth
                             name="password"
                             label="Password"
-                            type= {password}
+                            type= "password"
                             id="password"
                             onSubmit = {(e) => {
                                 setPassword(e.target.value);

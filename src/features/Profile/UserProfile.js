@@ -1,68 +1,181 @@
-import React, { useState } from 'react'
-import { Dashboard } from '../../components/Dashboard'
-import { useNavigate } from 'react-router-dom';
-import { validateEmail } from '../../utils/validateEmail';
-import { validatePassword } from '../../utils/validatePassword';
-import UpdateChildModal from '../../components/UpdateChildModal';
-import { NavBar } from '../../components/LoggedNavbar';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { validateEmail } from "../../utils/validateEmail";
+import { validatePassword } from "../../utils/validatePassword";
+import UpdateChildModal from "../../components/UpdateChildModal";
+import { Box, Container, Grid, TextField, Toolbar } from "@mui/material";
+import { Button } from "react-bootstrap";
+import { UserDashboard } from "../../components/UserDashboard";
 
 export const UserProfile = () => {
-    const [name,setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
-    const [emailError, setEmailError] = useState('');
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [country, setCounrty] = useState("");
+  const [city, setCity] = useState("");
+  const [adress, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [birthDate, setBirthDate] = useState("");
 
-    let navigate = useNavigate();    
-    const handleSubmit = () => {
-        navigate('/user');
-    };
+  const [passwordError, setPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
-    return (
-        <div style={({ display: "flex" })}>
-        <Dashboard/>
-        <main>
-            <NavBar/>
-            <div className='profile-div'>
-                <img src="https://reactjs.org/logo-og.png" alt="profile" className='profile-img'></img>
-                <div className='user-info-container'>
-                    <form className='login-form' onSubmit={handleSubmit}>
-                        <div class="form-group" id='form-group-profile'>
-                            <label for="name">Name</label>
-                            <input type={name} class="form-control" id="email" placeholder='name' required
-                            onChange={(e)=>{
-                                setName(e.target.value);}}/>
-                        </div>
-                        <div class="form-group" id='form-group-profile'>
-                            <label for={surname}>Surname</label>
-                            <input type="surname" class="form-control" id="email" placeholder='surname' required
-                            onChange={(e)=>{
-                                setSurname(e.target.value);}}/>
-                        </div>
-                        <div class="form-group" id='form-group-profile'>
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder='email' required
-                            onChange={(e) => {
-                                setEmailError(validateEmail(e));}}/>{emailError && <h6 style={{color: 'red'}}>{emailError}</h6>}
-                        </div>
-                        <div class="form-group" id='form-group-profile'>
-                            <label for="pwd">Password</label>
-                            <input type="password" class="form-control" id="pwd" placeholder='password' required
-                                onChange={(e) => {
-                                setPasswordError(validatePassword(e));}}/>{passwordError && <h6 style={{color: 'red'}}>{passwordError}</h6>}
-                        </div>
-                        <div class="form-group" id='form-group-profile'>
-                            <label for={phoneNumber}>Contact Number</label>
-                            <input type="phone" class="form-control" id="phone" placeholder='phone number' required
-                            onChange={(e)=>{
-                                setPhoneNumber(e.target.value);}}/>
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="button">Save Changes</button>
-                    </form>
-                    <UpdateChildModal/>
-                </div>
-            </div>
-        </main>
-    </div>
-    )
-}
+  let navigate = useNavigate();
+  const handleSubmit = () => {
+    navigate("/user");
+  };
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+      }}
+    >
+      <UserDashboard />
+      <Box
+        sx={{
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <img
+            src="https://reactjs.org/logo-og.png"
+            alt="profile"
+            className="profile-img"
+          ></img>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="FirstName"
+                  required
+                  fullWidth
+                  id="FirstName"
+                  label="First Name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="LastName"
+                  label="Last Name"
+                  name="LastName"
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="Country"
+                  required
+                  fullWidth
+                  id="Country"
+                  label="Country"
+                  onChange={(e) => {
+                    setCounrty(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="City"
+                  label="City"
+                  name="City"
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Adress"
+                  label="Address"
+                  name="Adress"
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="Phone"
+                  required
+                  fullWidth
+                  type="tel"
+                  id="Phone"
+                  label="Phone"
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="BirthDate"
+                  label="Birth Date"
+                  name="BirthDate"
+                  onChange={(e) => {
+                    setBirthDate(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Email"
+                  label="Email Address"
+                  name="Email"
+                  onChange={(e) => {
+                    setEmailError(validateEmail(e));
+                  }}
+                />
+                {emailError && <h6>{emailError}</h6>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Eassword"
+                  label="Password"
+                  type="Password"
+                  id="Eassword"
+                  onChange={(e) => {
+                    setPasswordError(validatePassword(e));
+                  }}
+                />
+                {passwordError && <h6>{passwordError}</h6>}
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Update
+            </Button>
+          </Box>
+          <UpdateChildModal/>
+        </Container>
+      </Box>
+    </Box>
+  );
+};
