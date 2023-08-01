@@ -9,11 +9,11 @@ import { array } from "../AllUsers/Array";
 export const AllTrips = () => {
   let navigate = useNavigate();
 
-  const [trip, setTrip] = useState([]);
+  const [trips, setTrip] = useState([]);
 
   useEffect(() => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");    
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -21,9 +21,9 @@ export const AllTrips = () => {
     };
 
 
-fetch("http://localhost:8000/api/users", requestOptions)
+fetch("http://localhost:8000/api/trips", requestOptions)
   .then(response => response.json())
-  .then(result => {setTrip(result.users)})
+  .then(result => {setTrip(result.trips)})
   .catch(error => console.log('error', error));
   }, [])
 
@@ -69,7 +69,7 @@ fetch("http://localhost:8000/api/users", requestOptions)
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {trip.map((item) => (
+                                {trips.map((item) => (
                                 <TableRow>
                                     <TableCell>{item.date_started}</TableCell>
                                     <TableCell>{item.bus_id}</TableCell>

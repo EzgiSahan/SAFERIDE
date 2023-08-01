@@ -16,9 +16,9 @@ export const AllCompanies = () => {
       redirect: 'follow'
     };
     
-    fetch("http://localhost:8000/api/users", requestOptions)
+    fetch("http://localhost:8000/api/company", requestOptions)
       .then(response => response.json())
-      .then(result => {setCompany(result.users)})
+      .then(result => {setCompany(result.company)})
       .catch(error => console.log('error', error));
   
   }, [])

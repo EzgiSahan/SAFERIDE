@@ -8,20 +8,21 @@ import { array } from "../AllUsers/Array";
 
 export const AllChildren = () => {
   let navigate = useNavigate();
+
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRiZDMyZGItNjc5NC00MWUyLWJiZjktODVmMDBlMTQ5Y2VkIiwidXNlcl9uYW1lIjoiYW1tYXIiLCJ1c2VyX2VtYWlsIjoiYW1tYXIzMjFAZ21haWwuY29tIiwiaWF0IjoxNjkwODA1NDM2LCJleHAiOjE2OTA4MDkwMzZ9.dxynAWO6vMin0nQJOajqsXdwdGQ45ifHgNY2_CCHmOQ");
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow'
     };
-
-    fetch("http://localhost:8000/api/users", requestOptions)
+    fetch("http://localhost:8000/api/children/", requestOptions)
     .then(response => response.json())
-    .then(result => {setChildren(result.users)})
+    .then(result => {setChildren(result.children)})
     .catch(error => console.log('error', error));
   }, [])
 
