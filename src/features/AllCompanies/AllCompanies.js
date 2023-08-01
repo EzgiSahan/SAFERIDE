@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UpdateModal from "../../components/UpdateModal";
@@ -8,7 +8,21 @@ import { array } from "../AllUsers/Array";
 
 export const AllCompanies = () => {
   let navigate = useNavigate();
+  const [company, setCompany] = useState([]);
 
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch("http://localhost:8000/api/users", requestOptions)
+      .then(response => response.json())
+      .then(result => {setCompany(result.users)})
+      .catch(error => console.log('error', error));
+  
+  }, [])
+  
   function deleted(id) {
     var index = array
       .map(function (e) {
@@ -42,20 +56,28 @@ export const AllCompanies = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell>Surname</TableCell>
+                                    <TableCell>Joined Date</TableCell>
                                     <TableCell>Email</TableCell>
                                     <TableCell>Phone</TableCell>
+                                    <TableCell>Role</TableCell>
+                                    <TableCell>Country</TableCell>
+                                    <TableCell>City</TableCell>
+                                    <TableCell>Address</TableCell>
                                     <TableCell>Update</TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {array.map((item) => (
+                                {company.map((item) => (
                                 <TableRow>
-                                    <TableCell>{item.Name}</TableCell>
-                                    <TableCell>{item.Surname}</TableCell>
-                                    <TableCell>{item.Email}</TableCell>
-                                    <TableCell>{item.Phone}</TableCell>
+                                    <TableCell>{item.company_name}</TableCell>
+                                    <TableCell>{item.date_joined}</TableCell>
+                                    <TableCell>{item.company_email}</TableCell>
+                                    <TableCell>{item.company_phone}</TableCell>
+                                    <TableCell>{item.company_role}</TableCell>
+                                    <TableCell>{item.company_country}</TableCell>
+                                    <TableCell>{item.company_city}</TableCell>
+                                    <TableCell>{item.company_address}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
                                     onClick={() => deleted(item.id)}

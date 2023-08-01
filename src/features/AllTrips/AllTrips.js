@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UpdateModal from "../../components/UpdateModal";
@@ -8,6 +8,25 @@ import { array } from "../AllUsers/Array";
 
 export const AllTrips = () => {
   let navigate = useNavigate();
+
+  const [trip, setTrip] = useState([]);
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+
+fetch("http://localhost:8000/api/users", requestOptions)
+  .then(response => response.json())
+  .then(result => {setTrip(result.users)})
+  .catch(error => console.log('error', error));
+  }, [])
+
 
   function deleted(id) {
     var index = array
@@ -41,21 +60,21 @@ export const AllTrips = () => {
                         <Table size="small">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Surname</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Phone</TableCell>
+                                    <TableCell>Started Date</TableCell>
+                                    <TableCell>Bus ID</TableCell>
+                                    <TableCell>Driver ID</TableCell>
+                                    <TableCell>Passenger</TableCell>
                                     <TableCell>Update</TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {array.map((item) => (
+                                {trip.map((item) => (
                                 <TableRow>
-                                    <TableCell>{item.Name}</TableCell>
-                                    <TableCell>{item.Surname}</TableCell>
-                                    <TableCell>{item.Email}</TableCell>
-                                    <TableCell>{item.Phone}</TableCell>
+                                    <TableCell>{item.date_started}</TableCell>
+                                    <TableCell>{item.bus_id}</TableCell>
+                                    <TableCell>{item.bus_driver_id}</TableCell>
+                                    <TableCell>{item.passenger}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
                                     onClick={() => deleted(item.id)}
