@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
-
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const defaultTheme = createTheme();
 
 
@@ -33,14 +33,14 @@ export const ResetPasswordFail = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
+                        <Avatar sx={{ m: 1, bgcolor: '#dc3545' }}>
+                            <HighlightOffIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            All done!
+                            Error Occurred!
                         </Typography>
-                        <Typography component="h1" variant="h6">
-                            Your password has been reset.
+                        <Typography className='text-center' component="h1" variant="h6">
+                            Your password couldn't be reset. Please try again later!
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <Button

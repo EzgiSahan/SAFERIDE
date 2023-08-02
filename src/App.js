@@ -44,7 +44,7 @@ const App = () => {
           <Route path='/all-companies' element={<AllCompanies/>} />
           <Route path='/create-companie' element={<CreateCompanie/>} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
-          <Route path="*" element={<Login/>} />
+          <Route path="*" element={<Home/>} />
         </Routes>
     </Router>
   );

@@ -161,7 +161,7 @@ export const AdminProfile = () => {
                     setPasswordError(validatePassword(e));
                   }}
                 />
-                {passwordError && <h6>{passwordError}</h6>}
+                {passwordError && <h6 style={{color:'red'}}>{passwordError}</h6>}
               </Grid>
             </Grid>
             <Button

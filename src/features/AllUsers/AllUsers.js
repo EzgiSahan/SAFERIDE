@@ -54,7 +54,7 @@ export const AllUsers = () => {
             <Grid>
                 <Grid>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                        <h1>All Users</h1>
+                        <h1>Users</h1>
                         <Table size="small">
                             <TableHead>
                                 <TableRow>

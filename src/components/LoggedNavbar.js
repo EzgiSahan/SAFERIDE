@@ -33,12 +33,6 @@ export const UserNavbar = (
             </ListItemIcon>
             <ListItemText primary="Logout" />
         </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-        </ListItemButton>
     </React.Fragment>
 );
 
@@ -56,21 +50,6 @@ export const AdminNavbar = (
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
             </ListItemButton>
-            <ListItemButton href='/login'>
-                <ListItemIcon>
-                    <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-            </ListItemButton>
-            <ListItemButton>
-                <ListItemIcon>
-                    <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-            </ListItemButton>
-        <ListSubheader component="div" inset>
-            See
-        </ListSubheader>
         <ListItemButton href='/all-users'>
             <ListItemIcon>
                 <PeopleIcon />
@@ -95,5 +74,11 @@ export const AdminNavbar = (
             </ListItemIcon>
             <ListItemText primary="All Companies" />
         </ListItemButton>
+        <ListItemButton href='/login'>
+                <ListItemIcon>
+                    <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+            </ListItemButton>
     </React.Fragment>
 );

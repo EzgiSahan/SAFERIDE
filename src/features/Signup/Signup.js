@@ -17,6 +17,8 @@ import { validatePassword } from '../../utils/validatePassword';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 const defaultTheme = createTheme();
 
 export const Signup = () => {
@@ -27,7 +29,6 @@ export const Signup = () => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [birthDate, setBirthDate] = useState('');
-    const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -45,7 +46,7 @@ export const Signup = () => {
             "email": email,
             "phone": phone,
             "password": password,
-            "role": role,
+            "role": "Normal",
             "country": country,
             "city": city,
             "address": address,
@@ -78,8 +79,8 @@ export const Signup = () => {
             flexDirection: 'column',
             alignItems: 'center',
             }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+                <PersonAddIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
                 Sign up
@@ -180,34 +181,24 @@ export const Signup = () => {
                         onChange={(e)=>{
                             setPasswordError(validatePassword(e));
                             setPassword(e.target.value);
-                            }}/>{passwordError && <h6>{passwordError}</h6>}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                        required
-                        fullWidth
-                        id="Role"
-                        label="Role"
-                        name="Role"
-                        onChange={(e)=>{
-                            setRole(e.target.value);}}/>
+                            }}/>{passwordError && <h6  style={{color:'red'}}>{passwordError}</h6>}
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
                         control={<Checkbox value="allowExtraEmails" color="primary" />}
-                        label="I want to receive inspiration, marketing promotions and updates via email."/>
+                        label="By clicking here, I state that I have read and understood the terms and conditions."/>
                     </Grid>
                 </Grid>
                 <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}>
+                sx={{ mt: 3, mb: 2, borderRadius:2, fontWeight:600,textTransform:'capitalize'}}>
                 Sign Up
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link href="sign-in" variant="body2">
+                        <Link href="/login" variant="body2">
                             Already have an account? Sign in
                         </Link>
                     </Grid>

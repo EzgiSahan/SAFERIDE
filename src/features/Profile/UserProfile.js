@@ -147,7 +147,7 @@ export const UserProfile = () => {
                     setEmailError(validateEmail(e));
                   }}
                 />
-                {emailError && <h6>{emailError}</h6>}
+                {emailError && <h6 style={{color:'red'}}>{emailError}</h6>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -161,7 +161,7 @@ export const UserProfile = () => {
                     setPasswordError(validatePassword(e));
                   }}
                 />
-                {passwordError && <h6>{passwordError}</h6>}
+                {passwordError && <h6 style={{color:'red'}}>{passwordError}</h6>}
               </Grid>
             </Grid>
             <Button

@@ -58,10 +58,10 @@ export const Login = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h4">
                             Login
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -97,7 +97,7 @@ export const Login = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}>
+                            sx={{ mt: 3, mb: 2,borderRadius:2, fontWeight:600,textTransform:'capitalize'}}>
                                 Sign In
                             </Button>
                             <Grid container>
