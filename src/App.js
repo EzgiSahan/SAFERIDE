@@ -24,18 +24,18 @@ const App = () => {
   return (
     <Router>
         <Routes>
-          <Route exact path="/" element={<Home/>} />
-          <Route path="/signup" element={<Signup/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/forget-password" element={<ForgetPassword/>} />
+          <Route exact path='/' element={<Home/>} />
+          <Route path='/signup' element={<Signup/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path='/forget-password' element={<ForgetPassword/>} />
           <Route path="/reset-password" element={<SetNewPassword/>} />
-          <Route path="/reset-password-success" element={<ResetPasswordSuccess/>} />
-          <Route path="/reset-password-fail" element={<ResetPasswordFail/>} />
-          <Route path="/user" element={<User/>} />
-          <Route path="/admin" element={<Admin/>} />
+          <Route path='/reset-password-success' element={<ResetPasswordSuccess/>} />
+          <Route path='/reset-password-fail' element={<ResetPasswordFail/>} />
+          <Route path='/user' element={<User/>} />
+          <Route path='/admin' element={<Admin/>} />
           <Route path='/admin-profile' element={<AdminProfile/>} />
           <Route path='/user-profile' element={<UserProfile/>} />
-          <Route path="/all-users" element={<AllUsers/>} />
+          <Route path='/all-users' element={<AllUsers/>} />
           <Route path='/create-user' element={<CreateUser/>} />
           <Route path='/all-children' element={<AllChildren/>} />
           <Route path='/create-children' element={<CreateChildren/>} />
