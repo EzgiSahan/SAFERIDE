@@ -50,29 +50,29 @@ export const AdminNavbar = (
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
             </ListItemButton>
-        <ListItemButton href='/all-users'>
+        <ListItemButton href='/users'>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="All Users" />
+            <ListItemText primary="Users" />
         </ListItemButton>
-        <ListItemButton href='/all-children'>
+        <ListItemButton href='/children'>
             <ListItemIcon>
                 <FamilyRestroomIcon />
             </ListItemIcon>
-            <ListItemText primary="All Children" />
+            <ListItemText primary="Children" />
         </ListItemButton>
-        <ListItemButton href='/all-trips'>
+        <ListItemButton href='/trips'>
             <ListItemIcon>
                 <CommuteIcon />
             </ListItemIcon>
-            <ListItemText primary="All Trips" />
+            <ListItemText primary="Trips" />
         </ListItemButton>
-        <ListItemButton href='/all-companies'>
+        <ListItemButton href='/companies'>
             <ListItemIcon>
                 <BusinessIcon />
             </ListItemIcon>
-            <ListItemText primary="All Companies" />
+            <ListItemText primary="Companies" />
         </ListItemButton>
         <ListItemButton href='/login'>
                 <ListItemIcon>

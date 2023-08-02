@@ -39,7 +39,7 @@ export const AllChildren = () => {
             <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                        <h1>All Children</h1>
+                        <h1>Children</h1>
                         <Table size="small">
                             <TableHead>
                                 <TableRow>

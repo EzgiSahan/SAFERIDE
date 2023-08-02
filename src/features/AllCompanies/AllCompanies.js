@@ -42,7 +42,7 @@ fetch("http://localhost:8000/api/company/", requestOptions)
             <Grid>
                 <Grid>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                        <h1>All Companies</h1>
+                        <h1>Companies</h1>
                         <Table size="small">
                             <TableHead>
                                 <TableRow>

@@ -42,7 +42,7 @@ export const AllTrips = () => {
             <Grid>
                 <Grid>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                        <h1>All Trips</h1>
+                        <h1>Trips</h1>
                         <Table size="small">
                             <TableHead>
                                 <TableRow>
