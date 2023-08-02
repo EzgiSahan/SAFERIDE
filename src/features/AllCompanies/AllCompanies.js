@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
-import { array } from "../AllUsers/Array";
 
 export const AllCompanies = () => {
-  let navigate = useNavigate();
   const [company, setCompany] = useState([]);
 
   useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    
     var requestOptions = {
       method: 'GET',
+      headers: myHeaders,
       redirect: 'follow'
     };
-    
-    fetch("http://localhost:8000/api/company", requestOptions)
-      .then(response => response.json())
-      .then(result => {setCompany(result.company)})
-      .catch(error => console.log('error', error));
+
+fetch("http://localhost:8000/api/company/", requestOptions)
+  .then(response => response.json())
+  .then(result => {setCompany(result.company)})
+  .catch(error => console.log('error', error));
   
   }, [])
   
-  function deleted(id) {
-    var index = array
-      .map(function (e) {
-        return e.id;
-      })
-      .indexOf(id);
-
-    array.splice(index, 1);
-
-    navigate("/all-companies");
-  }
+  
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
         theme.palette.mode === 'light'
@@ -80,14 +71,14 @@ export const AllCompanies = () => {
                                     <TableCell>{item.company_address}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
-                                    onClick={() => deleted(item.id)}
+                                    
                                     variant="danger">
                                         Delete
                                     </Button></TableCell>
                                 </TableRow>))}
                             </TableBody>
                         </Table>
-                        <Link className="d-grid gap-2" to='/create-user'>
+                        <Link className="d-grid gap-2" href='/create-companie'>
                             <Button variant="warning" size="lg">Create</Button>
                         </Link>
                     </Paper>

@@ -4,10 +4,8 @@ import { useNavigate } from "react-router-dom";
 import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
-import { array } from "../AllUsers/Array";
 
 export const AllChildren = () => {
-  let navigate = useNavigate();
 
   const [children, setChildren] = useState([]);
 
@@ -26,17 +24,6 @@ export const AllChildren = () => {
     .catch(error => console.log('error', error));
   }, [])
 
-  function deleted(id) {
-    var index = array
-      .map(function (e) {
-        return e.id;
-      })
-      .indexOf(id);
-
-    array.splice(index, 1);
-
-    navigate("/all-children");
-  }
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
         theme.palette.mode === 'light'
@@ -73,14 +60,14 @@ export const AllChildren = () => {
                                     <TableCell>{item.children_phone}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
-                                    onClick={() => deleted(item.id)}
+                                    
                                     variant="danger">
                                         Delete
                                     </Button></TableCell>
                                 </TableRow>))}
                             </TableBody>
                         </Table>
-                        <Link className="d-grid gap-2" to='/create-user'>
+                        <Link className="d-grid gap-2" href='/create-children'>
                             <Button variant="warning" size="lg">Create</Button>
                         </Link>
                     </Paper>

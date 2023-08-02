@@ -1,74 +1,162 @@
-import { Box } from '@mui/material';
-import {React, useState} from 'react'
-import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
-import { AdminDashboard } from '../../components/AdminDashboard';
-import { array } from '../AllUsers/Array';
+import {
+	Box,
+	Container,
+	createTheme,
+	CssBaseline,
+	FormControl,
+	Grid,
+	InputLabel,
+	MenuItem,
+	Select,
+	TextField,
+	Toolbar,
+	Typography,
+  } from "@mui/material";
+  import { React, useEffect, useState } from "react";
+  import { Button, ThemeProvider } from "react-bootstrap";
+  import { useNavigate } from "react-router-dom";
+  import { AdminDashboard } from "../../components/AdminDashboard";
+  const defaultTheme = createTheme();
+  
 
-export const CreateTrip = () => {
-    const [name, setName] = useState('');
-	const [surname, setSurname] = useState('');
-	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
-
+  export const CreateTrip = () => {
+	const [date, setDate] = useState("");
+	const [busId, setBusId] = useState("");
+	const [driverId, setDriverId] = useState("");
+	const [passenger, setPassenger] = useState("");
+	const [bus, setBus] = useState([]);
+  
 	let navigate = useNavigate();
 
+	useEffect(() => {
+		var myHeaders = new Headers();
+		myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+		
+		var requestOptions = {
+		  method: 'GET',
+		  headers: myHeaders,
+		  redirect: 'follow'
+		};
+		
+		fetch("http://localhost:8000/api/bus/", requestOptions)
+		  .then(response => response.json())
+		  .then(result => {setBus(result.bus)})
+		  .catch(error => console.log('error', error));
+	}, [])
+ 
 	const handelSubmit = () => {
-		const ids = uuid()
-		let uni = ids.slice(0, 8)
-
-		let a = name, b = surname, c=email, d=phone
-		array.push({ id: uni, Name: a, Surname: b, Email: c, Phone: d })
-
-		navigate('/all-users')
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+		
+		var raw = JSON.stringify({
+		  date: date,
+		  busId: busId,
+		  driverId: driverId,
+		  passenger: [passenger]
+		});
+		
+		var requestOptions = {
+		  method: 'POST',
+		  headers: myHeaders,
+		  body: raw,
+		  redirect: 'follow'
+		};
+		
+		fetch("http://localhost:8000/api/trips/", requestOptions)
+		  .then(response => response.text())
+		  .then(result => console.log(result))
+		  .catch(error => console.log('error', error));
+		navigate('/all-trips')
 	}
 
 	return (
-		<Box sx={{ display: "flex" }}>
-			<AdminDashboard/>
-		    <Form className="d-grid gap-2"
-				style={{ margin: '15rem' }}>
-				<Form.Group className="mb-3"
-					controlId="formBasicName">
-					<Form.Control onChange=
-						{e => setName(e.target.value)}
-						type="text"
-						placeholder="Name" required />
-				</Form.Group>
-				<Form.Group className="mb-3"
-					controlId="formBasicSurname">
-					<Form.Control onChange=
-						{e => setSurname(e.target.value)}
-						type="text"
-						placeholder="Surname" required />
-				</Form.Group>
-				<Form.Group className="mb-3"
-					controlId="formBasicEmail">
-					<Form.Control onChange=
-						{e => setEmail(e.target.value)}
-						type="text"
-						placeholder="Email" required />
-				</Form.Group>
-				<Form.Group className="mb-3"
-					controlId="formBasicPhone">
-					<Form.Control onChange=
-						{e => setPhone(e.target.value)}
-						type="text"
-						placeholder="Contact Number" required />
-				</Form.Group>
-				<Button
-					onClick={e => handelSubmit(e)}
-					variant="primary" type="submit">
-					Submit
-				</Button>
-				<Link className="d-grid gap-2" to='/all-users'>
-					<Button variant="info" size="lg">
-						Cancel
+	  <>
+		<Box
+		  sx={{
+			display: "flex",
+			backgroundColor: (theme) =>
+			  theme.palette.mode === "light"
+				? theme.palette.grey[100]
+				: theme.palette.grey[900],
+		  }}
+		>
+		  <AdminDashboard />
+		  <Box
+			sx={{
+			  flexGrow: 1,
+			  height: "100vh",
+			  overflow: "auto",
+			}}
+		  >
+			<Toolbar />
+			<ThemeProvider theme={defaultTheme}>
+			  <Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<Box
+				  sx={{
+					marginTop: 8,
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				  }}
+				>
+				  <Typography component="h1" variant="h5">
+					Create Trip
+				  </Typography>
+				  <Box component="form" onSubmit={handelSubmit} sx={{ mt: 3 }}>
+					<Grid container spacing={2}>
+					  <Grid item xs={12}>
+						<TextField
+						  name="Date"
+						  required
+						  fullWidth
+						  id="JoinDate"
+						  label="Join Date"
+						  onChange={(e) => {
+							setDate(e.target.value);
+						  }}
+						/>
+					  </Grid>
+					  <Grid item xs={12}>
+					  <FormControl fullWidth>
+						<InputLabel id="demo-simple-select-label">Bus</InputLabel>
+						<Select
+						labelId="demo-simple-select-label"
+						id="demo-simple-select"
+						onChange={(e) => {
+							setBusId(e.target.value);
+							setDriverId(e.target.value);
+						}}
+						label="Bus">
+							{bus.map((item) => (
+								<MenuItem value={item.bus_id}>{item.bus_model}</MenuItem>
+							))}
+						</Select>
+					  </FormControl>
+					  </Grid>
+					  <Grid item xs={12}>
+						<TextField
+						  required
+						  fullWidth
+						  id="Passenger"
+						  label="Passenger"
+						  name="Passenger"
+						  onChange={(e) => {
+							setPassenger(e.target.value);
+						  }}
+						/>
+					  </Grid>
+					</Grid>
+					<Button variant="primary" type="submit">
+					  Create
 					</Button>
-				</Link>
-			</Form>
+				  </Box>
+				</Box>
+			  </Container>
+			</ThemeProvider>
+		  </Box>
 		</Box>
-	)
-}
+	  </>
+	);
+  };
+  

@@ -4,41 +4,27 @@ import { useNavigate } from "react-router-dom";
 import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
-import { array } from "../AllUsers/Array";
 
 export const AllTrips = () => {
-  let navigate = useNavigate();
 
   const [trips, setTrip] = useState([]);
-
+  
   useEffect(() => {
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");    
+    
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow'
     };
-
-
-fetch("http://localhost:8000/api/trips", requestOptions)
-  .then(response => response.json())
-  .then(result => {setTrip(result.trips)})
-  .catch(error => console.log('error', error));
+    fetch("http://localhost:8000/api/trips", requestOptions)
+    .then(response => response.json())
+    .then(result => {setTrip(result.trips)})
+    .catch(error => console.log('error', error));
   }, [])
 
-
-  function deleted(id) {
-    var index = array
-      .map(function (e) {
-        return e.id;
-      })
-      .indexOf(id);
-
-    array.splice(index, 1);
-
-    navigate("/all-trips");
-  }
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
         theme.palette.mode === 'light'
@@ -62,7 +48,6 @@ fetch("http://localhost:8000/api/trips", requestOptions)
                                 <TableRow>
                                     <TableCell>Started Date</TableCell>
                                     <TableCell>Bus ID</TableCell>
-                                    <TableCell>Driver ID</TableCell>
                                     <TableCell>Passenger</TableCell>
                                     <TableCell>Update</TableCell>
                                     <TableCell>Delete</TableCell>
@@ -73,18 +58,17 @@ fetch("http://localhost:8000/api/trips", requestOptions)
                                 <TableRow>
                                     <TableCell>{item.date_started}</TableCell>
                                     <TableCell>{item.bus_id}</TableCell>
-                                    <TableCell>{item.bus_driver_id}</TableCell>
                                     <TableCell>{item.passenger}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
-                                    onClick={() => deleted(item.id)}
+                                    
                                     variant="danger">
                                         Delete
                                     </Button></TableCell>
                                 </TableRow>))}
                             </TableBody>
                         </Table>
-                        <Link className="d-grid gap-2" to='/create-user'>
+                        <Link className="d-grid gap-2" href='/create-trip'>
                             <Button variant="warning" size="lg">Create</Button>
                         </Link>
                     </Paper>

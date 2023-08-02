@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { array } from "./Array";
 import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
 
 export const AllUsers = () => {
-  let navigate = useNavigate();
   const [user, setUser] = useState([]);
 
   useEffect(() => {
@@ -26,17 +23,6 @@ export const AllUsers = () => {
     .catch(error => console.log('error', error));
   }, []);
 
-  function deleted(id) {
-    var index = array
-      .map(function (e) {
-        return e.id;
-      })
-      .indexOf(id);
-
-    array.splice(index, 1);
-
-    navigate("/all-users");
-  }
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
         theme.palette.mode === 'light'
@@ -85,14 +71,14 @@ export const AllUsers = () => {
                                     <TableCell>{item.user_birthdate}</TableCell>
                                     <TableCell><UpdateModal /></TableCell>
                                     <TableCell><Button
-                                    onClick={() => deleted(item.id)}
+                                    
                                     variant="danger">
                                         Delete
                                     </Button></TableCell>
                                 </TableRow>))}
                             </TableBody>
                         </Table>
-                        <Link className="d-grid gap-2" to='/create-user'>
+                        <Link className="d-grid gap-2" href='/create-user'>
                             <Button variant="warning" size="lg">Create</Button>
                         </Link>
                     </Paper>

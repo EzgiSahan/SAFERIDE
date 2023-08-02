@@ -39,8 +39,12 @@ export const Login = () => {
             redirect: 'follow'
         };
         fetch("localhost:8000/auth/login", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
+        .then(response => response.json())
+        .then(result => {
+            localStorage.setItem('accessToken',result.accessToken);
+            localStorage.setItem('refreshToken',result.refreshToken);
+
+        })
         .catch(error => console.log('error', error));
         navigate('/user')
     };
