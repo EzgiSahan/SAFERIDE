@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validateEmail";
 import { validatePassword } from "../../utils/validatePassword";
 import UpdateChildModal from "../../components/UpdateChildModal";
-import { Box, Container, Grid, TextField, Toolbar } from "@mui/material";
-import { Button } from "react-bootstrap";
+import { Box, Container, Grid, TextField, Toolbar,Button} from "@mui/material";
 import { UserDashboard } from "../../components/UserDashboard";
 
 export const UserProfile = () => {
@@ -38,17 +37,12 @@ export const UserProfile = () => {
       <Box
         sx={{
           flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
+          height: "auto",
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <img
-            src="https://reactjs.org/logo-og.png"
-            alt="profile"
-            className="profile-img"
-          ></img>
+        <Container maxWidth="lg" sx={{ mt: 3, marginLeft:5,width:'fit-content' ,p:3 ,mb: 4,backgroundColor:"white" }}>
+        <h3>User Profile</h3>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -136,7 +130,27 @@ export const UserProfile = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+            </Grid>
+            <div className="submit-cont">
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 2, width:'20%',alignContent: 'center'}}
+            >
+              Update
+            </Button>
+            </div>
+            
+          </Box>
+        </Container>     
+
+        <Container maxWidth="lg" sx={{ mt: 3,marginLeft:5,width:'auto' ,p:3 ,mb: 4,backgroundColor:"white" }}>
+        <h3>Reset Password</h3>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -147,9 +161,9 @@ export const UserProfile = () => {
                     setEmailError(validateEmail(e));
                   }}
                 />
-                {emailError && <h6 style={{color:'red'}}>{emailError}</h6>}
-              </Grid>
-              <Grid item xs={12}>
+                {emailError && <h6>{emailError}</h6>}
+              </Grid> */}
+              <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth
@@ -163,18 +177,37 @@ export const UserProfile = () => {
                 />
                 {passwordError && <h6 style={{color:'red'}}>{passwordError}</h6>}
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Eassword"
+                  label="Confirm Password"
+                  type="Password"
+                  id="Eassword"
+                  onChange={(e) => {
+                    setPasswordError(validatePassword(e));
+                  }}
+                />
+                {passwordError && <h6 style={{color:'red'}}>{passwordError}</h6>}
+              </Grid>
+              
             </Grid>
+            <div className="reset-cont">
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              color="secondary"
+              sx={{ mt: 3, mb: 2, width:'20%',alignContent: 'center',fontWeight:'bold'}}
             >
-              Update
+              Reset
             </Button>
+            </div>
+            
           </Box>
-          <UpdateChildModal/>
-        </Container>
+          {/* <UpdateChildModal /> */}
+        </Container>  
       </Box>
     </Box>
   );
