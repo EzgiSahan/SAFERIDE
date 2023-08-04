@@ -32,8 +32,6 @@ export const Signup = () => {
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [verificationEmailSent, setVerificationEmailSent] = useState(false);
-
 
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
@@ -45,16 +43,16 @@ export const Signup = () => {
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "name": name,
-            "surname": surname,
-            "email": email,
-            "phone": phone,
-            "password": password,
-            "role": "Normal",
-            "country": country,
-            "city": city,
-            "address": address,
-            "birthdate": birthDate
+            name: name,
+            surname: surname,
+            email: email,
+            phone: phone,
+            password: password,
+            role: "Normal",
+            country: country,
+            city: city,
+            address: address,
+            birthdate: birthDate
         });
         var requestOptions = {
             method: 'POST',
@@ -64,14 +62,7 @@ export const Signup = () => {
         };
         fetch("http://localhost:8000/api/verification/signup/", requestOptions)
         .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            if (result.success) {
-                setVerificationEmailSent(true);
-            }
-            else {
-                setVerificationEmailSent(true);
-            }})
+        .then(result => console.log(result))
         .catch(error => console.log('error', error));
     };
     

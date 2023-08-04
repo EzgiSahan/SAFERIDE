@@ -19,6 +19,8 @@ import { AllTrips } from './features/AllTrips/AllTrips';
 import { CreateTrip } from './features/AllTrips/CreateTrip';
 import { AllCompanies } from './features/AllCompanies/AllCompanies';
 import { CreateCompanie } from './features/AllCompanies/CreateCompanie';
+import { SignupSuccess } from './features/Signup/SignupSuccess';
+import { SignupFail } from './features/Signup/SignupFail';
 
 const App = () => {
   return (
@@ -43,6 +45,8 @@ const App = () => {
           <Route path='/create-trip' element={<CreateTrip/>} />
           <Route path='/all-companies' element={<AllCompanies/>} />
           <Route path='/create-companie' element={<CreateCompanie/>} />
+          <Route path='/signup-success' element= {<SignupSuccess/>} />
+          <Route path='/signup-fail' element={<SignupFail/>} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" element={<Home/>} />
         </Routes>
