@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
+import UpdateUser from "./UpdateUser";
 
 export const AllUsers = () => {
+
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRiZDMyZGItNjc5NC00MWUyLWJiZjktODVmMDBlMTQ5Y2VkIiwidXNlcl9uYW1lIjoiYW1tYXIiLCJ1c2VyX2VtYWlsIjoiYW1tYXIzMjFAZ21haWwuY29tIiwiaWF0IjoxNjkwODA1NDM2LCJleHAiOjE2OTA4MDkwMzZ9.dxynAWO6vMin0nQJOajqsXdwdGQ45ifHgNY2_CCHmOQ");
-    myHeaders.append("Cookie", "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRiZDMyZGItNjc5NC00MWUyLWJiZjktODVmMDBlMTQ5Y2VkIiwidXNlcl9uYW1lIjoiYW1tYXIiLCJ1c2VyX2VtYWlsIjoiYW1tYXIzMjFAZ21haWwuY29tIiwiaWF0IjoxNjkwODA1NDM2LCJleHAiOjE2OTA4MDkwMzZ9.dxynAWO6vMin0nQJOajqsXdwdGQ45ifHgNY2_CCHmOQ")
     
     var requestOptions = {
       method: 'GET',
@@ -19,9 +19,30 @@ export const AllUsers = () => {
     };
     fetch("http://localhost:8000/api/users/", requestOptions)
     .then(response => response.json())
-    .then(result => {setUser(result.users)})
+    .then(result => {
+      setUser(result.users)
+    })
     .catch(error => console.log('error', error));
   }, []);
+
+  const deleteUser = (id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        window.location.reload();
+        // setTrip(trips.filter(item => item.id !== id));
+      })
+      .catch(error => console.log('error', error));
+  };
 
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
@@ -59,7 +80,7 @@ export const AllUsers = () => {
                             </TableHead>
                             <TableBody>
                                 {user.map((item) => (
-                                <TableRow>
+                                <TableRow key={item.user_id}> 
                                     <TableCell>{item.user_name}</TableCell>
                                     <TableCell>{item.user_surname}</TableCell>
                                     <TableCell>{item.user_email}</TableCell>
@@ -69,11 +90,14 @@ export const AllUsers = () => {
                                     <TableCell>{item.user_city}</TableCell>
                                     <TableCell>{item.user_address}</TableCell>
                                     <TableCell>{item.user_birthdate}</TableCell>
-                                    <TableCell><UpdateModal /></TableCell>
-                                    <TableCell><Button
-                                    
-                                    variant="danger">
-                                        Delete
+                                    <TableCell><UpdateUser id={item.user_id} /></TableCell>
+                                    <TableCell><Button 
+                                      onClick={() => 
+                                        deleteUser(item.user_id)
+                                          
+                                      }
+                                      variant="danger">
+                                      Delete
                                     </Button></TableCell>
                                 </TableRow>))}
                             </TableBody>

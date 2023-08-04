@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
+import UpdateTrip from "./UpdateTrip";
 
 export const AllTrips = () => {
 
@@ -24,6 +23,25 @@ export const AllTrips = () => {
     .then(result => {setTrip(result.trips)})
     .catch(error => console.log('error', error));
   }, [])
+
+  const deleteTrip = (id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8000/api/trips/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        window.location.reload();
+        // setTrip(trips.filter(item => item.id !== id));
+      })
+      .catch(error => console.log('error', error));
+  };
 
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
@@ -55,16 +73,16 @@ export const AllTrips = () => {
                             </TableHead>
                             <TableBody>
                                 {trips.map((item) => (
-                                <TableRow>
+                                <TableRow key={item.trip_id}>
                                     <TableCell>{item.date_started}</TableCell>
                                     <TableCell>{item.bus_id}</TableCell>
                                     <TableCell>{item.passenger}</TableCell>
-                                    <TableCell><UpdateModal /></TableCell>
-                                    <TableCell><Button
-                                    
-                                    variant="danger">
+                                    <TableCell><UpdateTrip id={item.trip_id}/></TableCell>
+                                    <TableCell>
+                                      <Button variant="danger" onClick={() => deleteTrip(item.trip_id)}>
                                         Delete
-                                    </Button></TableCell>
+                                      </Button>
+                                    </TableCell>
                                 </TableRow>))}
                             </TableBody>
                         </Table>

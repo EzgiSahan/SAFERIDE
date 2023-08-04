@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
+import UpdateChildren from "./UpdateChildren";
 
 export const AllChildren = () => {
 
@@ -24,6 +23,24 @@ export const AllChildren = () => {
     .catch(error => console.log('error', error));
   }, [])
 
+  const deleteChildren = (id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8000/api/children/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        window.location.reload();
+        // setTrip(trips.filter(item => item.id !== id));
+      })
+      .catch(error => console.log('error', error));
+  };
   return (
     <Box sx={{ display: "flex", backgroundColor: (theme) =>
         theme.palette.mode === 'light'
@@ -53,13 +70,13 @@ export const AllChildren = () => {
                             </TableHead>
                             <TableBody>
                                 {children.map((item) => (
-                                <TableRow>
+                                <TableRow key={item.children_id}>
                                     <TableCell>{item.children_name}</TableCell>
                                     <TableCell>{item.children_surname}</TableCell>
                                     <TableCell>{item.children_email}</TableCell>
                                     <TableCell>{item.children_phone}</TableCell>
-                                    <TableCell><UpdateModal /></TableCell>
-                                    <TableCell><Button
+                                    <TableCell><UpdateChildren id={item.children_id}/></TableCell>
+                                    <TableCell><Button onClick={() => deleteChildren(item.children_id)}
                                     
                                     variant="danger">
                                         Delete

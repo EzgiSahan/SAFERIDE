@@ -35,13 +35,13 @@ const App = () => {
           <Route path='/admin' element={<Admin/>} />
           <Route path='/admin-profile' element={<AdminProfile/>} />
           <Route path='/user-profile' element={<UserProfile/>} />
-          <Route path='/users' element={<AllUsers/>} />
+          <Route path='/all-users' element={<AllUsers/>} />
           <Route path='/create-user' element={<CreateUser/>} />
-          <Route path='/children' element={<AllChildren/>} />
+          <Route path='/all-children' element={<AllChildren/>} />
           <Route path='/create-children' element={<CreateChildren/>} />
-          <Route path='/trips' element={<AllTrips/>} />
+          <Route path='/all-trips' element={<AllTrips/>} />
           <Route path='/create-trip' element={<CreateTrip/>} />
-          <Route path='/companies' element={<AllCompanies/>} />
+          <Route path='/all-companies' element={<AllCompanies/>} />
           <Route path='/create-companie' element={<CreateCompanie/>} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" element={<Home/>} />

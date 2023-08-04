@@ -19,8 +19,6 @@ import {
 	const [name, setName] = useState("");
 	const [date, setDate] = useState("");
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [role, setRole] = useState("");
 	const [country, setCountry] = useState("");
 	const [city, setCity] = useState("");
 	const [address, setAddress] = useState("");
@@ -29,7 +27,7 @@ import {
 	const [emailError, setEmailError] = useState("");
   
 	let navigate = useNavigate();
-  
+
 	const handelSubmit = () => {
 		var myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/json");
@@ -39,8 +37,6 @@ import {
 		  date: date,
 		  email: email,
 		  phone: phone,
-		  password: password,
-		  role: role,
 		  country: country,
 		  city: city,
 		  address: address,
@@ -54,7 +50,7 @@ import {
 		};
 		
 		fetch("http://localhost:8000/api/company/", requestOptions)
-		  .then(response => response.text())
+		  .then(response => response.json())
 		  .then(result => console.log(result))
 		  .catch(error => console.log('error', error));
 		  navigate('/all-companies')
@@ -134,31 +130,6 @@ import {
 						  }}
 						/>
 						{emailError && <h6>{emailError}</h6>}
-					  </Grid>
-					  <Grid item xs={12}>
-						<TextField
-						  required
-						  fullWidth
-						  id="Password"
-						  label="Password"
-						  name="Password"
-						  type={'password'}
-						  onChange={(e) => {
-							setPassword(e.target.value);
-						  }}
-						/>
-					  </Grid>
-					  <Grid item xs={12}>
-						<TextField
-						  name="Role"
-						  required
-						  fullWidth
-						  id="Role"
-						  label="Role"
-						  onChange={(e) => {
-							setRole(e.target.value);
-						  }}
-						/>
 					  </Grid>
 					  <Grid item xs={12}>
 						<TextField

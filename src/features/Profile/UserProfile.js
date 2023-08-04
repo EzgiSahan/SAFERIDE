@@ -6,19 +6,47 @@ import UpdateChildModal from "../../components/UpdateChildModal";
 import { Box, Container, Grid, TextField, Toolbar,Button} from "@mui/material";
 import { UserDashboard } from "../../components/UserDashboard";
 
-export const UserProfile = () => {
+export const UserProfile = ({id}) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [country, setCounrty] = useState("");
   const [city, setCity] = useState("");
-  const [adress, setAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
-
   const [passwordError, setPasswordError] = useState(false);
-  const [emailError, setEmailError] = useState("");
 
   let navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleUpdate = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+        user_name: name,
+        user_surname: surname,
+        user_phone: phone,
+        user_country: country,
+        user_city: city,
+        user_address: address,
+        user_birthdate: birthDate
+    });
+    var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+    fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+    navigate("/user");
+  }
+
   const handleSubmit = () => {
     navigate("/user");
   };
@@ -43,7 +71,7 @@ export const UserProfile = () => {
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 3, marginLeft:5,width:'fit-content' ,p:3 ,mb: 4,backgroundColor:"white" }}>
         <h3>User Profile</h3>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleUpdate} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField

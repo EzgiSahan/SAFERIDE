@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import UpdateModal from "../../components/UpdateModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
+import UpdateCompanie from "./UpdateCompanie";
 
 export const AllCompanies = () => {
   const [company, setCompany] = useState([]);
@@ -23,6 +23,25 @@ fetch("http://localhost:8000/api/company/", requestOptions)
   .catch(error => console.log('error', error));
   
   }, [])
+
+  const deleteCompany = (id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8000/api/company/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        window.location.reload();
+        // setTrip(trips.filter(item => item.id !== id));
+      })
+      .catch(error => console.log('error', error));
+  };
   
   
   return (
@@ -50,7 +69,6 @@ fetch("http://localhost:8000/api/company/", requestOptions)
                                     <TableCell>Joined Date</TableCell>
                                     <TableCell>Email</TableCell>
                                     <TableCell>Phone</TableCell>
-                                    <TableCell>Role</TableCell>
                                     <TableCell>Country</TableCell>
                                     <TableCell>City</TableCell>
                                     <TableCell>Address</TableCell>
@@ -60,18 +78,16 @@ fetch("http://localhost:8000/api/company/", requestOptions)
                             </TableHead>
                             <TableBody>
                                 {company.map((item) => (
-                                <TableRow>
+                                <TableRow key={item.company_id}>
                                     <TableCell>{item.company_name}</TableCell>
                                     <TableCell>{item.date_joined}</TableCell>
                                     <TableCell>{item.company_email}</TableCell>
                                     <TableCell>{item.company_phone}</TableCell>
-                                    <TableCell>{item.company_role}</TableCell>
                                     <TableCell>{item.company_country}</TableCell>
                                     <TableCell>{item.company_city}</TableCell>
                                     <TableCell>{item.company_address}</TableCell>
-                                    <TableCell><UpdateModal /></TableCell>
-                                    <TableCell><Button
-                                    
+                                    <TableCell><UpdateCompanie id={item.company_id} /></TableCell>
+                                    <TableCell><Button onClick={() => deleteCompany(item.company_id)}
                                     variant="danger">
                                         Delete
                                     </Button></TableCell>
