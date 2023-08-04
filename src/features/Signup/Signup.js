@@ -21,6 +21,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const defaultTheme = createTheme();
 
+
 export const Signup = () => {
     const [name,setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -31,6 +32,7 @@ export const Signup = () => {
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [verificationEmailSent, setVerificationEmailSent] = useState(false);
 
 
     const [passwordError, setPasswordError] = useState(false);
@@ -39,7 +41,9 @@ export const Signup = () => {
 
     const handleSubmit = () => {
         var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
         myHeaders.append("Content-Type", "application/json");
+
         var raw = JSON.stringify({
             "name": name,
             "surname": surname,
@@ -58,11 +62,17 @@ export const Signup = () => {
             body: raw,
             redirect: 'follow'
         };
-        fetch("http://localhost:8000/api/users", requestOptions)
+        fetch("http://localhost:8000/api/verification/signup/", requestOptions)
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => {
+            console.log(result);
+            if (result.success) {
+                setVerificationEmailSent(true);
+            }
+            else {
+                setVerificationEmailSent(true);
+            }})
         .catch(error => console.log('error', error));
-        navigate('/admin')
     };
     
       
