@@ -3,15 +3,45 @@ import { Button, Table } from "react-bootstrap";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
 import UpdateTrip from "./UpdateTrip";
+import { useNavigate } from "react-router-dom";
 
 export const AllTrips = () => {
 
   const [trips, setTrip] = useState([]);
+  let navigate = useNavigate();
+
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          const role = data.user.role;
+          if(role === 'Normal'){
+            navigate('/user')
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    } 
+  }, []);
   
   useEffect(() => {
 
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");    
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
     
     var requestOptions = {
       method: 'GET',
@@ -72,7 +102,7 @@ export const AllTrips = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {trips.map((item) => (
+                                {trips?.map((item) => (
                                 <TableRow key={item.trip_id}>
                                     <TableCell>{item.date_started}</TableCell>
                                     <TableCell>{item.bus_id}</TableCell>

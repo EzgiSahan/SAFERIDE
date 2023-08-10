@@ -8,16 +8,14 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { validateEmail } from '../../utils/validateEmail';
 import { validatePassword } from '../../utils/validatePassword';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
-import { useNavigate } from 'react-router-dom';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const defaultTheme = createTheme();
 
@@ -29,13 +27,13 @@ export const Signup = () => {
     const [city, setCity] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
+    const [role, setRole] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = () => {
         var myHeaders = new Headers();
@@ -43,12 +41,12 @@ export const Signup = () => {
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            name: name,
-            surname: surname,
+            firstName: name,
+            lastName: surname,
             email: email,
             phone: phone,
             password: password,
-            role: "Normal",
+            role: role,
             country: country,
             city: city,
             address: address,
@@ -151,6 +149,17 @@ export const Signup = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                        name="Role"
+                        required
+                        fullWidth
+                        type='role'
+                        id="Role"
+                        label="Role"
+                        onChange={(e)=>{
+                            setRole(e.target.value);}}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
                         required
                         fullWidth
                         id="BirthDate"
@@ -175,7 +184,7 @@ export const Signup = () => {
                         <TextField
                         required
                         fullWidth
-                        name="Eassword"
+                        name="Password"
                         label="Password"
                         type="Password"
                         id="Password"

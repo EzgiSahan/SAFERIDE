@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../assets/styles/Styles.css'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -10,6 +10,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+
 
 export const UserNavbar = (
     <React.Fragment>
@@ -25,11 +26,17 @@ export const UserNavbar = (
             </ListItemIcon>
             <ListItemText primary="Profile" />
         </ListItemButton>
-        <ListItemButton href='/login'>
+        <ListItemButton href='/add-children'>
+            <ListItemIcon>
+                <FamilyRestroomIcon />
+            </ListItemIcon>
+            <ListItemText primary="Children" />
+        </ListItemButton>
+        <ListItemButton onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
             <ListItemIcon>
                 <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary="Logout"/>
         </ListItemButton>
     </React.Fragment>
 );
@@ -72,7 +79,7 @@ export const AdminNavbar = (
             </ListItemIcon>
             <ListItemText primary="Companies" />
         </ListItemButton>
-        <ListItemButton href='/login'>
+        <ListItemButton onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
                 <ListItemIcon>
                     <LogoutIcon />
                 </ListItemIcon>

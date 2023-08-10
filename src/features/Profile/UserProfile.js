@@ -22,17 +22,18 @@ export const UserProfile = ({id}) => {
   const handleShow = () => setShow(true);
 
   const handleUpdate = () => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-        user_name: name,
-        user_surname: surname,
-        user_phone: phone,
-        user_country: country,
-        user_city: city,
-        user_address: address,
-        user_birthdate: birthDate
+        firstName: name,
+        lastName: surname,
+        phone: phone,
+        country: country,
+        city: city,
+        address: address,
+        birthdate: birthDate
     });
     var requestOptions = {
         method: 'PUT',
@@ -42,14 +43,21 @@ export const UserProfile = ({id}) => {
     };
     fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-    navigate("/user");
+    .then(result => {
+      const role = result.user.role;
+      console.log(role)
+      if(role === 'Admin'){
+        navigate('/admin');
+      }
+      console.log(result)
+    })
+    .catch(error => {localStorage.clear();
+    navigate('/user');});
   }
 
-  const handleSubmit = () => {
-    navigate("/user");
-  };
+/*   const handleSubmit = () => {
+    navigate('/user')
+  }; */
 
   return (
     <Box
@@ -80,6 +88,7 @@ export const UserProfile = ({id}) => {
                   fullWidth
                   id="FirstName"
                   label="First Name"
+                  value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -92,6 +101,7 @@ export const UserProfile = ({id}) => {
                   id="LastName"
                   label="Last Name"
                   name="LastName"
+                  value={surname}
                   onChange={(e) => {
                     setSurname(e.target.value);
                   }}
@@ -104,6 +114,7 @@ export const UserProfile = ({id}) => {
                   fullWidth
                   id="Country"
                   label="Country"
+                  value={country}
                   onChange={(e) => {
                     setCounrty(e.target.value);
                   }}
@@ -116,6 +127,7 @@ export const UserProfile = ({id}) => {
                   id="City"
                   label="City"
                   name="City"
+                  value={city}
                   onChange={(e) => {
                     setCity(e.target.value);
                   }}
@@ -128,6 +140,7 @@ export const UserProfile = ({id}) => {
                   id="Adress"
                   label="Address"
                   name="Adress"
+                  value={address}
                   onChange={(e) => {
                     setAddress(e.target.value);
                   }}
@@ -141,6 +154,7 @@ export const UserProfile = ({id}) => {
                   type="tel"
                   id="Phone"
                   label="Phone"
+                  value={phone}
                   onChange={(e) => {
                     setPhone(e.target.value);
                   }}
@@ -153,6 +167,7 @@ export const UserProfile = ({id}) => {
                   id="BirthDate"
                   label="Birth Date"
                   name="BirthDate"
+                  value={birthDate}
                   onChange={(e) => {
                     setBirthDate(e.target.value);
                   }}
@@ -176,7 +191,7 @@ export const UserProfile = ({id}) => {
 
         <Container maxWidth="lg" sx={{ mt: 3,marginLeft:5,width:'auto' ,p:3 ,mb: 4,backgroundColor:"white" }}>
         <h3>Reset Password</h3>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleUpdate} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               {/* <Grid item xs={12}>
                 <TextField

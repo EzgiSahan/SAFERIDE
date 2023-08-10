@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { InputLabel, MenuItem, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function UpdateTrip({ id }) {
   const [date, setDate] = useState("");
@@ -11,13 +12,39 @@ export default function UpdateTrip({ id }) {
   const [passenger, setPassenger] = useState("");
   const [show, setShow] = useState(false);
   const [bus, setBus] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          const role = data.user.role;
+          if(role === 'Normal'){
+            navigate('/user')
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    } 
+  }, []);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY"
-    );
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
     var requestOptions = {
       method: "GET",
@@ -28,6 +55,7 @@ export default function UpdateTrip({ id }) {
     fetch("http://localhost:8000/api/bus/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
+
         setBus(result.bus);
       })
       .catch((error) => console.log("error", error));
@@ -68,6 +96,7 @@ export default function UpdateTrip({ id }) {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
+        <Toolbar />
         <Modal.Header closeButton>
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>

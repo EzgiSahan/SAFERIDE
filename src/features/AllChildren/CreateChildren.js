@@ -12,7 +12,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { React ,useEffect,useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
@@ -28,34 +28,63 @@ export const CreateChildren = () => {
   const [parentId, setParentId] = useState("");
   const [users, setUsers] = useState([]);
 
+  const [userData, setUserData] = useState([]);
+
   let navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const role = data.user.role;
+          if (role === "Normal") {
+            navigate("/user");
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
-    
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
     var requestOptions = {
-      method: 'GET',
+      method: "GET",
       headers: myHeaders,
-      redirect: 'follow'
+      redirect: "follow",
     };
     fetch("http://localhost:8000/api/users/", requestOptions)
-    .then(response => response.json())
-    .then(result => {setUsers(result.users)})
-    .catch(error => console.log('error', error));
-  
-  }, [])
+      .then((response) => response.json())
+      .then((result) => {
+        setUsers(result.users);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
 
   const handelSubmit = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      name: name,
-      surname: surname,
+      firstName: name,
+      lastName: surname,
       email: email,
       phone: phone,
-      parentId: parentId
+      userId: parentId,
     });
 
     var requestOptions = {
@@ -69,8 +98,8 @@ export const CreateChildren = () => {
       .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-	  navigate("/all-children");
-	};
+    navigate("/all-children");
+  };
 
   return (
     <>
@@ -160,20 +189,25 @@ export const CreateChildren = () => {
                       {emailError && <h6>{emailError}</h6>}
                     </Grid>
                     <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Parent</InputLabel>
-                      <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      onChange={(e) => {
-                        setParentId(e.target.value);
-                      }}
-                      label="Parent">
-                        {users.map((item) => (
-                        <MenuItem value={item.user_id}>{item.user_name} {item.user_surname}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Parent
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          onChange={(e) => {
+                            setParentId(e.target.value);
+                          }}
+                          label="Parent"
+                        >
+                          {users.map((item) => (
+                            <MenuItem value={item.id}>
+                              {item.firstName} {item.lastName}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                   </Grid>
                   <Button variant="primary" type="submit">

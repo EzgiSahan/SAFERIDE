@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
@@ -28,17 +28,42 @@ export const CreateUser = () => {
   const [date, setDate] = useState("");
 
   const [emailError, setEmailError] = useState("");
-
+  const [userData, setUserData] = useState([]);
 
   let navigate = useNavigate();
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const role = data.user.role;
+          if (role === "Normal") {
+            navigate("/user");
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    }
+  }, []);
   const handelSubmit = () => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
     var raw = JSON.stringify({
-      name: name,
-      surname: surname,
+      firstName: name,
+      lastName: surname,
       email: email,
       phone: phone,
       password: password,
@@ -57,7 +82,9 @@ export const CreateUser = () => {
     };
     fetch("http://localhost:8000/api/users/", requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+      })
       .catch((error) => console.log("error", error));
     navigate("/all-users");
   };
@@ -141,6 +168,7 @@ export const CreateUser = () => {
                         fullWidth
                         id="Email"
                         label="Email Address"
+                        type={"email"}
                         name="Email"
                         onChange={(e) => {
                           setEmailError(validateEmail(e));
@@ -154,7 +182,7 @@ export const CreateUser = () => {
                         name="Password"
                         required
                         fullWidth
-                        type={'password'}
+                        type={"password"}
                         id="Password"
                         label="Password"
                         onChange={(e) => {

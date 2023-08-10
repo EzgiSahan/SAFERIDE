@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { AdminDashboard } from "../../components/AdminDashboard";
 import {
   Box,
   Container,
@@ -12,10 +11,11 @@ import {
   TableRow,
   Toolbar,
 } from "@mui/material";
-import UpdateChildren from "./UpdateChildren";
 import { useNavigate } from "react-router-dom";
+import UpdateChildren from "../AllChildren/UpdateChildren";
+import { UserDashboard } from "../../components/UserDashboard";
 
-export const AllChildren = () => {
+export const AddChildren = () => {
   const [children, setChildren] = useState([]);
   const [userData, setUserData] = useState([]);
 
@@ -39,50 +39,35 @@ export const AllChildren = () => {
           }
           console.log(role);
           setUserData(data.user);
+          const id = data.user.id;  
+          const childAccessToken = localStorage.getItem("accessToken");
+          var childHeaders = new Headers();
+          childHeaders.append("Authorization", `Bearer ${childAccessToken}`);
+  
+          var childRequestOptions = {
+            method: "GET",
+            headers: childHeaders,
+            redirect: "follow",
+          };
+          fetch(`http://localhost:8000/api/children/${id}`, childRequestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+              if (Array.isArray(result)) {
+                setChildren(result);
+              } else {
+                console.log("Children data is not an array:", result);
+              }
+            })
+            .catch((error) => console.log("error", error));
         })
         .catch((error) => {
           console.error("Error fetching user information:", error);
         });
     }
   }, []);
+  
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/children/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setChildren(result.children);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
-
-  const deleteChildren = (id) => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(`http://localhost:8000/api/children/${id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        window.location.reload();
-        // setTrip(trips.filter(item => item.id !== id));
-      })
-      .catch((error) => console.log("error", error));
-  };
   return (
     <Box
       sx={{
@@ -93,7 +78,7 @@ export const AllChildren = () => {
             : theme.palette.grey[900],
       }}
     >
-      <AdminDashboard />
+      <UserDashboard />
       <Box
         sx={{
           flexGrow: 1,
@@ -126,14 +111,7 @@ export const AllChildren = () => {
                     <TableCell>
                       <UpdateChildren id={item.id} />
                     </TableCell>
-                    <TableCell>
-                      <Button
-                        onClick={() => deleteChildren(item.id)}
-                        variant="danger"
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 ))}
               </TableBody>

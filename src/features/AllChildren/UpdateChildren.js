@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { InputLabel, MenuItem, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function UpdateChildren({ id }) {
   const [show, setShow] = useState(false);
@@ -16,12 +17,39 @@ export default function UpdateChildren({ id }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [userData, setUserData] = useState([]);
+
+  let navigate = useNavigate();
+
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const role = data.user.role;
+          if (role === "Normal") {
+            navigate("/user");
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY"
-    );
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
     var requestOptions = {
       method: "GET",
@@ -37,32 +65,29 @@ export default function UpdateChildren({ id }) {
   }, []);
 
   const handleUpdate = () => {
-    
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY"
-    );
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      children_name: name,
-      children_surname: surname,
-      children_email: email,
-      children_phone: phone,
-      user_id: parentId
-  });
+      firstName: name,
+      lastName: surname,
+      email: email,
+      phone: phone,
+      userid: parentId,
+    });
 
     var requestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: myHeaders,
       body: raw,
-      redirect: 'follow'
-  };
+      redirect: "follow",
+    };
     fetch(`http://localhost:8000/api/children/${id}`, requestOptions)
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -72,6 +97,7 @@ export default function UpdateChildren({ id }) {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
+        <Toolbar />
         <Modal.Header closeButton>
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>
@@ -82,6 +108,7 @@ export default function UpdateChildren({ id }) {
               <Form.Control
                 type="name"
                 placeholder="name"
+                value={name}
                 autoFocus
                 onChange={(e) => {
                   setName(e.target.value);
@@ -93,6 +120,7 @@ export default function UpdateChildren({ id }) {
               <Form.Control
                 type="surname"
                 placeholder="surname"
+                value={surname}
                 autoFocus
                 onChange={(e) => {
                   setSurname(e.target.value);
@@ -104,6 +132,7 @@ export default function UpdateChildren({ id }) {
               <Form.Control
                 type="email"
                 placeholder="email"
+                value={email}
                 autoFocus
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -115,6 +144,7 @@ export default function UpdateChildren({ id }) {
               <Form.Control
                 type="phone"
                 placeholder="phone"
+                value={phone}
                 autoFocus
                 onChange={(e) => {
                   setPhone(e.target.value);
@@ -132,7 +162,9 @@ export default function UpdateChildren({ id }) {
                 label="Parent"
               >
                 {users.map((item) => (
-                  <MenuItem value={item.user_id}>{item.user_name} {item.user_surname}</MenuItem>
+                  <MenuItem value={item.user_id}>
+                    {item.user_name} {item.user_surname}
+                  </MenuItem>
                 ))}
               </Select>
             </Form.Group>

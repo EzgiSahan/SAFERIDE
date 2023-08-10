@@ -1,113 +1,166 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { AdminDashboard } from "../../components/AdminDashboard";
-import { Box, Container, Grid, Link, Paper, TableBody, TableCell, TableHead, TableRow, Toolbar } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Link,
+  Paper,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Toolbar,
+} from "@mui/material";
 import UpdateUser from "./UpdateUser";
+import { useNavigate } from "react-router-dom";
 
 export const AllUsers = () => {
-
   const [user, setUser] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.user);
+          const role = data.user.role;
+          if (role === "Normal") {
+            navigate("/user");
+          }
+          console.log(role);
+          setUserData(data.user);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRiZDMyZGItNjc5NC00MWUyLWJiZjktODVmMDBlMTQ5Y2VkIiwidXNlcl9uYW1lIjoiYW1tYXIiLCJ1c2VyX2VtYWlsIjoiYW1tYXIzMjFAZ21haWwuY29tIiwiaWF0IjoxNjkwODA1NDM2LCJleHAiOjE2OTA4MDkwMzZ9.dxynAWO6vMin0nQJOajqsXdwdGQ45ifHgNY2_CCHmOQ");
-    
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
     var requestOptions = {
-      method: 'GET',
+      method: "GET",
       headers: myHeaders,
-      redirect: 'follow'
+      redirect: "follow",
     };
     fetch("http://localhost:8000/api/users/", requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      setUser(result.users)
-    })
-    .catch(error => console.log('error', error));
+      .then((response) => response.json())
+      .then((result) => {
+        setUser(result.users);
+        console.log(result.users);
+      })
+      .catch((error) => console.log("error", error));
   }, []);
 
   const deleteUser = (id) => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
     var requestOptions = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: myHeaders,
-      redirect: 'follow'
+      redirect: "follow",
     };
 
     fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
+      .then((response) => response.json())
+      .then((result) => {
         window.location.reload();
         // setTrip(trips.filter(item => item.id !== id));
       })
-      .catch(error => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
 
   return (
-    <Box sx={{ display: "flex", backgroundColor: (theme) =>
-        theme.palette.mode === 'light'
-          ? theme.palette.grey[100]
-          : theme.palette.grey[900], }}>
+    <Box
+      sx={{
+        display: "flex",
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+      }}
+    >
       <AdminDashboard />
       <Box
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
-        }}>
-            <Toolbar />
+        }}
+      >
+        <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid>
             <Grid>
-                <Grid>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                        <h1>Users</h1>
-                        <Table size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Surname</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Phone</TableCell>
-                                    <TableCell>Role</TableCell>
-                                    <TableCell>Country</TableCell>
-                                    <TableCell>City</TableCell>
-                                    <TableCell>Address</TableCell>
-                                    <TableCell>Birth Date</TableCell>
-                                    <TableCell>Update</TableCell>
-                                    <TableCell>Delete</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {user.map((item) => (
-                                <TableRow key={item.user_id}> 
-                                    <TableCell>{item.user_name}</TableCell>
-                                    <TableCell>{item.user_surname}</TableCell>
-                                    <TableCell>{item.user_email}</TableCell>
-                                    <TableCell>{item.user_phone}</TableCell>
-                                    <TableCell>{item.user_role}</TableCell>
-                                    <TableCell>{item.user_country}</TableCell>
-                                    <TableCell>{item.user_city}</TableCell>
-                                    <TableCell>{item.user_address}</TableCell>
-                                    <TableCell>{item.user_birthdate}</TableCell>
-                                    <TableCell><UpdateUser id={item.user_id} /></TableCell>
-                                    <TableCell><Button 
-                                      onClick={() => 
-                                        deleteUser(item.user_id)
-                                          
-                                      }
-                                      variant="danger">
-                                      Delete
-                                    </Button></TableCell>
-                                </TableRow>))}
-                            </TableBody>
-                        </Table>
-                        <Link className="d-grid gap-2" href='/create-user'>
-                            <Button variant="warning" size="lg">Create</Button>
-                        </Link>
-                    </Paper>
-                </Grid>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                <h1>Users</h1>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Surname</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Phone</TableCell>
+                      <TableCell>Role</TableCell>
+                      <TableCell>Country</TableCell>
+                      <TableCell>City</TableCell>
+                      <TableCell>Address</TableCell>
+                      <TableCell>Birth Date</TableCell>
+                      <TableCell>Update</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {user?.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>{item.firstName}</TableCell>
+                        <TableCell>{item.lastName}</TableCell>
+                        <TableCell>{item.email}</TableCell>
+                        <TableCell>{item.phone}</TableCell>
+                        <TableCell>{item.role}</TableCell>
+                        <TableCell>{item.country}</TableCell>
+                        <TableCell>{item.city}</TableCell>
+                        <TableCell>{item.address}</TableCell>
+                        <TableCell>{item.birhdate}</TableCell>
+                        <TableCell>
+                          <UpdateUser id={item.id} />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            onClick={() => deleteUser(item.id)}
+                            variant="danger"
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Link className="d-grid gap-2" href="/create-user">
+                  <Button variant="warning" size="lg">
+                    Create
+                  </Button>
+                </Link>
+              </Paper>
             </Grid>
+          </Grid>
         </Container>
       </Box>
     </Box>
