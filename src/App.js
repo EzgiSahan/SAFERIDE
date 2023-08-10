@@ -21,6 +21,7 @@ import { AllCompanies } from './features/AllCompanies/AllCompanies';
 import { CreateCompanie } from './features/AllCompanies/CreateCompanie';
 import { SignupSuccess } from './features/Signup/SignupSuccess';
 import { SignupFail } from './features/Signup/SignupFail';
+import { BusRegisteration } from './features/BusRegisterationModule';
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
           <Route path='/create-companie' element={<CreateCompanie/>} />
           <Route path='/signup-success' element= {<SignupSuccess/>} />
           <Route path='/signup-fail' element={<SignupFail/>} />
+          <Route path='/register-bus' element={<BusRegisteration/>} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" element={<Home/>} />
         </Routes>

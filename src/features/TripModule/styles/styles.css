@@ -1,0 +1,57 @@
+
+
+  /* TRIP */
+  .content-scroll-h {
+    max-width: 100%;
+    overflow: hidden;
+    overflow: scroll;
+  }
+  .trips {
+    display: flex;
+  }
+  .trip {
+    height: 108px;
+    margin: 8px;
+    width: auto;
+  }
+  .card-content {
+    padding: 40px 16px 8px;
+  }
+  .top-left-banner {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 4px;
+    left: 0;
+  }
+  
+  .status {
+    background: #D9DCDF;
+    border-radius: 0 3px 3px 0;
+    margin-right: 8px;
+    padding: 5px 8px 3px 16px;
+    font-size: 10px;
+    color: rgba(0,0,0,0.50);
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+  .trip-id {
+    font-family: Graphik-Medium;
+    font-size: 10px;
+    color: #80858D;
+    letter-spacing: 1px;
+    line-height: 16px;
+  }
+  .top-right {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 4px;
+    right: 16px;
+  }
+  .price {
+    color: #454B56;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
