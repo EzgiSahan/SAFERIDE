@@ -22,8 +22,9 @@ const defaultTheme = createTheme();
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
   let navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     var myHeaders = new Headers();
@@ -39,17 +40,22 @@ export const Login = () => {
       redirect: "follow",
     };
     fetch("http://localhost:8000/api/auth/login", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        localStorage.setItem("accessToken", result.accessToken);
-        localStorage.setItem("refreshToken", result.refreshToken);
-        console.log(result);
-      })
-      .catch((error) =>{
+    .then((response) => response.json())
+    .then((result) => {
+        if (result.accessToken) {
+            localStorage.setItem("accessToken", result.accessToken);
+            localStorage.setItem("refreshToken", result.refreshToken);
+            console.log(result);
+            navigate('/user');
+        } 
+        else {
+          setErrorMessage(result.error);
+        }
+    })
+    .catch((error) => {
         localStorage.clear();
-        navigate('/login');
-      });
-      navigate('/user')
+        console.error(error);
+    });
   };
 
   return (
@@ -100,6 +106,10 @@ export const Login = () => {
                 }}
                 autoComplete="current-password"
               />
+              {errorMessage && (
+              <Typography variant="body2" color="error">
+                {errorMessage}
+              </Typography>)}
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

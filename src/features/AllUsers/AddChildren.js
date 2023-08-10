@@ -11,15 +11,12 @@ import {
   TableRow,
   Toolbar,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import UpdateChildren from "../AllChildren/UpdateChildren";
 import { UserDashboard } from "../../components/UserDashboard";
 
 export const AddChildren = () => {
-  const [children, setChildren] = useState([]);
-  const [userData, setUserData] = useState([]);
 
-  let navigate = useNavigate();
+  const [children, setChildren] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -31,33 +28,27 @@ export const AddChildren = () => {
         },
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          const role = data.user.role;
-          if (role === "Normal") {
-            navigate("/user");
-          }
-          console.log(role);
-          setUserData(data.user);
-          const id = data.user.id;  
+        .then((result) => {
+          setUser(result.user);
+          const id = result.user.id;
+          
           const childAccessToken = localStorage.getItem("accessToken");
           var childHeaders = new Headers();
           childHeaders.append("Authorization", `Bearer ${childAccessToken}`);
-  
+
           var childRequestOptions = {
             method: "GET",
             headers: childHeaders,
             redirect: "follow",
           };
-          fetch(`http://localhost:8000/api/children/${id}`, childRequestOptions)
+          fetch(
+            `http://localhost:8000/api/children/user/${id}`,
+            childRequestOptions
+          )
             .then((response) => response.json())
             .then((result) => {
-              console.log(result);
-              if (Array.isArray(result)) {
-                setChildren(result);
-              } else {
-                console.log("Children data is not an array:", result);
-              }
+                setChildren(result.children);
+                console.log(result);
             })
             .catch((error) => console.log("error", error));
         })
@@ -66,7 +57,6 @@ export const AddChildren = () => {
         });
     }
   }, []);
-  
 
   return (
     <Box
@@ -97,30 +87,20 @@ export const AddChildren = () => {
                   <TableCell>Surname</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Phone</TableCell>
-                  <TableCell>Update</TableCell>
-                  <TableCell>Delete</TableCell>
+                  {/* <TableCell>Update</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {children?.map((item) => (
+              {Array.isArray(children) && children.map((item) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.firstName}</TableCell>
                     <TableCell>{item.lastName}</TableCell>
                     <TableCell>{item.email}</TableCell>
                     <TableCell>{item.phone}</TableCell>
-                    <TableCell>
-                      <UpdateChildren id={item.id} />
-                    </TableCell>
-                    <TableCell></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-            <Link className="d-grid gap-2" href="/create-children">
-              <Button variant="warning" size="lg">
-                Create
-              </Button>
-            </Link>
           </Paper>
         </Container>
       </Box>
