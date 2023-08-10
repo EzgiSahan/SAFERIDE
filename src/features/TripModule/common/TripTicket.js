@@ -7,7 +7,7 @@ import Typography from '@mui/joy/Typography';
 
 export default function TripTicket() {
   return (
-    <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
+    <Card orientation="horizontal" variant="outlined" sx={{ width: 300  }}>
       <CardOverflow>
         <AspectRatio ratio="1" sx={{ width: 90 }}>
           <img
