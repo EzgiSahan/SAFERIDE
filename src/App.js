@@ -21,7 +21,7 @@ import { AllCompanies } from './features/AllCompanies/AllCompanies';
 import { CreateCompanie } from './features/AllCompanies/CreateCompanie';
 import { SignupSuccess } from './features/Signup/SignupSuccess';
 import { SignupFail } from './features/Signup/SignupFail';
-import { BusRegisteration } from './features/BusRegisterationModule';
+import { BusRegisteration } from './features/TripModule';
 
 const App = () => {
   return (
