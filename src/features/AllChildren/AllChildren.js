@@ -23,6 +23,7 @@ export const AllChildren = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -42,28 +43,27 @@ export const AllChildren = () => {
         })
         .catch((error) => {
           console.error("Error fetching user information:", error);
+        });  
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
+  
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+  
+      fetch("http://localhost:8000/api/children/", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setChildren(result.children);
+        })
+        .catch((error) => {
+          console.log("Error fetching children:", error);
         });
     }
   }, []);
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/children/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setChildren(result.children);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
-
+  
   const deleteChildren = (id) => {
     const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();

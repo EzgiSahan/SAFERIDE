@@ -14,45 +14,46 @@ export const AllTrips = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+
     if (accessToken) {
-      fetch("http://localhost:8000/api/users/me", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+        fetch("http://localhost:8000/api/users/me", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
-          const role = data.user.role;
-          if(role === 'Normal'){
-            navigate('/user')
-          }
-          console.log(role);
-          setUserData(data.user);
+            console.log(data);
+            const role = data.user.role;
+            
+            if (role === 'Normal') {
+                navigate('/user');
+            }
+            
+            console.log(role);
+            setUserData(data.user);
         })
         .catch((error) => {
-          console.error("Error fetching user information:", error);
+            console.error("Error fetching user information:", error);
         });
-    } 
-  }, []);
-  
-  useEffect(() => {
-
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${accessToken}`);
     
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch("http://localhost:8000/api/trips", requestOptions)
-    .then(response => response.json())
-    .then(result => {setTrip(result.trips)})
-    .catch(error => console.log('error', error));
-  }, [])
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        
+        fetch("http://localhost:8000/api/trips", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setTrip(result.trips);
+        })
+        .catch(error => console.log('error', error));
+    }
+}, []);
 
   const deleteTrip = (id) => {
     var myHeaders = new Headers();

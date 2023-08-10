@@ -31,6 +31,7 @@ export const CreateTrip = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -40,10 +41,10 @@ export const CreateTrip = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          console.log(data);
           const role = data.user.role;
-          if(role === "Normal"){
-            navigate('/user')
+          if (role === "Normal") {
+            navigate('/user');
           }
           console.log(role);
           setUserData(data.user);
@@ -51,26 +52,27 @@ export const CreateTrip = () => {
         .catch((error) => {
           console.error("Error fetching user information:", error);
         });
-    } 
-  }, []);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-    
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
+      
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
 
-    fetch("http://localhost:8000/api/bus/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setBus(result.bus);})
-      .catch((error) => console.log("error", error));
-  }, []);
+      fetch("http://localhost:8000/api/bus/", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setBus(result.bus);
+        })
+        .catch((error) => {
+          console.log("Error fetching bus information:", error);
+        });
+    }
+}, []);
+
 
   const handleSubmit = () => {
     var myHeaders = new Headers();

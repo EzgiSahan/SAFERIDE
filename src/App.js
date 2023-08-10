@@ -21,11 +21,8 @@ import { AllCompanies } from './features/AllCompanies/AllCompanies';
 import { CreateCompanie } from './features/AllCompanies/CreateCompanie';
 import { SignupSuccess } from './features/Signup/SignupSuccess';
 import { SignupFail } from './features/Signup/SignupFail';
-<<<<<<< HEAD
 import { AddChildren } from './features/AllUsers/AddChildren';
-=======
 import { BusRegisteration } from './features/TripModule';
->>>>>>> 796742a2f499f4605797f33ced144bc9c5482a48
 
 const App = () => {
   return (
@@ -52,11 +49,8 @@ const App = () => {
           <Route path='/create-companie' element={<CreateCompanie/>} />
           <Route path='/signup-success' element= {<SignupSuccess/>} />
           <Route path='/signup-fail' element={<SignupFail/>} />
-<<<<<<< HEAD
           <Route path='/add-children' element={<AddChildren/>} />
-=======
           <Route path='/register-bus' element={<BusRegisteration/>} />
->>>>>>> 796742a2f499f4605797f33ced144bc9c5482a48
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" element={<Home/>} />
         </Routes>

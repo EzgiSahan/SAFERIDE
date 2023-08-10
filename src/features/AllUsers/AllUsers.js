@@ -24,6 +24,7 @@ export const AllUsers = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -33,39 +34,34 @@ export const AllUsers = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.user);
           const role = data.user.role;
+          setUserData(data.user);  
           if (role === "Normal") {
             navigate("/user");
           }
-          console.log(role);
-          setUserData(data.user);
         })
         .catch((error) => {
           console.error("Error fetching user information:", error);
+        });  
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
+  
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+      fetch("http://localhost:8000/api/users/", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setUser(result.users);
+        })
+        .catch((error) => {
+          console.log("Error fetching users:", error);
         });
     }
   }, []);
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/users/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setUser(result.users);
-        console.log(result.users);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
-
+  
   const deleteUser = (id) => {
     const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();

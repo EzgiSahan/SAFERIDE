@@ -34,6 +34,7 @@ export const CreateChildren = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -41,40 +42,38 @@ export const CreateChildren = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          const role = data.user.role;
-          if (role === "Normal") {
-            navigate("/user");
-          }
-          console.log(role);
-          setUserData(data.user);
-        })
-        .catch((error) => {
-          console.error("Error fetching user information:", error);
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/users/", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const role = data.user.role;
+        if (role === "Normal") {
+          navigate("/user");
+        }
+        console.log(role);
+        setUserData(data.user);
+      })
+      .catch((error) => {
+        console.error("Error fetching user information:", error);
+      });
+  
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
+  
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+  
+      fetch("http://localhost:8000/api/users/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUsers(result.users);
       })
       .catch((error) => console.log("error", error));
+    }
   }, []);
-
+  
   const handelSubmit = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

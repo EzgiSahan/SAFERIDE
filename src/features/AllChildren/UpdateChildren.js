@@ -23,6 +23,7 @@ export default function UpdateChildren({ id }) {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+  
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -37,32 +38,32 @@ export default function UpdateChildren({ id }) {
           if (role === "Normal") {
             navigate("/user");
           }
+  
           console.log(role);
           setUserData(data.user);
+  
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer ${accessToken}`);
+  
+          var requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+          };
+  
+          fetch("http://localhost:8000/api/users/", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+              setUsers(result.users);
+            })
+            .catch((error) => console.log("error", error));
         })
         .catch((error) => {
           console.error("Error fetching user information:", error);
         });
     }
   }, []);
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/users/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setUsers(result.users);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
+  
 
   const handleUpdate = () => {
     const accessToken = localStorage.getItem("accessToken");

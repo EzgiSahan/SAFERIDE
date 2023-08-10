@@ -18,6 +18,7 @@ export default function UpdateTrip({ id }) {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -27,10 +28,10 @@ export default function UpdateTrip({ id }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          console.log(data);
           const role = data.user.role;
-          if(role === 'Normal'){
-            navigate('/user')
+          if (role === 'Normal') {
+            navigate('/user');
           }
           console.log(role);
           setUserData(data.user);
@@ -38,28 +39,24 @@ export default function UpdateTrip({ id }) {
         .catch((error) => {
           console.error("Error fetching user information:", error);
         });
-    } 
-  }, []);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
 
-    fetch("http://localhost:8000/api/bus/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-
-        setBus(result.bus);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
+      fetch("http://localhost:8000/api/bus/", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setBus(result.bus);
+        })
+        .catch((error) => console.log("error", error));
+    }
+}, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
