@@ -13,18 +13,18 @@ import {
   TableRow,
   Toolbar,
 } from "@mui/material";
-import UpdateUser from "./UpdateUser";
 import { useNavigate } from "react-router-dom";
+import UpdateCompanyAdmin from "./UpdateCompanyAdmin";
 
-export const AllUsers = () => {
+export const AllCompanyAdmin = () => {
+  const [companyadmin, setCompanyAdmin] = useState([]);
   const [user, setUser] = useState([]);
-  const [userData, setUserData] = useState([]);
 
   let navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    
+  
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -33,16 +33,18 @@ export const AllUsers = () => {
         },
       })
         .then((response) => response.json())
-        .then((data) => {
-          const role = data.user.role;
-          setUserData(data.user);  
+        .then((result) => {
+          /* const role = result.user.role;
+          console.log(role)
           if (role === "Normal") {
             navigate("/user");
-          }
+          } */
+          setUser(result.user);
         })
         .catch((error) => {
           console.error("Error fetching user information:", error);
-        });  
+        });
+  
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${accessToken}`);
   
@@ -51,18 +53,19 @@ export const AllUsers = () => {
         headers: myHeaders,
         redirect: "follow",
       };
-      fetch("http://localhost:8000/api/users/", requestOptions)
+  
+      fetch("http://localhost:8000/api/companyAdmin", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setUser(result.users);
+          setCompanyAdmin(result.companyadmin);
+          console.log(result.companyadmin)
+          console.log(result)
         })
-        .catch((error) => {
-          console.log("Error fetching users:", error);
-        });
+        .catch((error) => console.log("error", error));
     }
   }, []);
   
-  const deleteUser = (id) => {
+  const deleteCompany = (id) => {
     const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
@@ -73,7 +76,7 @@ export const AllUsers = () => {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+    fetch(`http://localhost:8000/api/companyAdmin/${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         window.location.reload();
@@ -105,41 +108,41 @@ export const AllUsers = () => {
           <Grid>
             <Grid>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                <h1>Users</h1>
+                <h1>Company Admins</h1>
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Surname</TableCell>
+                      <TableCell>First Name</TableCell>
+                      <TableCell>Last Name</TableCell>
                       <TableCell>Email</TableCell>
                       <TableCell>Phone</TableCell>
-                      <TableCell>Role</TableCell>
                       <TableCell>Country</TableCell>
                       <TableCell>City</TableCell>
                       <TableCell>Address</TableCell>
                       <TableCell>Birth Date</TableCell>
+                      <TableCell>Role</TableCell>
                       <TableCell>Update</TableCell>
                       <TableCell>Delete</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {user?.map((item) => (
+                    {companyadmin?.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell>{item.firstName}</TableCell>
                         <TableCell>{item.lastName}</TableCell>
                         <TableCell>{item.email}</TableCell>
                         <TableCell>{item.phone}</TableCell>
-                        <TableCell>{item.role}</TableCell>
                         <TableCell>{item.country}</TableCell>
                         <TableCell>{item.city}</TableCell>
                         <TableCell>{item.address}</TableCell>
                         <TableCell>{item.birthdate}</TableCell>
+                        <TableCell>{item.role}</TableCell>
                         <TableCell>
-                          <UpdateUser id={item.id} />
+                          <UpdateCompanyAdmin id={item.id} />
                         </TableCell>
                         <TableCell>
                           <Button
-                            onClick={() => deleteUser(item.id)}
+                            onClick={() => deleteCompany(item.id)}
                             variant="danger"
                           >
                             Delete
@@ -149,7 +152,7 @@ export const AllUsers = () => {
                     ))}
                   </TableBody>
                 </Table>
-                <Link className="d-grid gap-2" href="/create-user">
+                <Link className="d-grid gap-2" href="/create-companyAdmin">
                   <Button variant="warning" size="lg">
                     Create
                   </Button>

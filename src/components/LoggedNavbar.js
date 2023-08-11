@@ -79,6 +79,12 @@ export const AdminNavbar = (
             </ListItemIcon>
             <ListItemText primary="Companies" />
         </ListItemButton>
+        <ListItemButton href='/all-companyAdmin'>
+            <ListItemIcon>
+                <CommuteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Company Admins" />
+        </ListItemButton>
         <ListItemButton onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
                 <ListItemIcon>
                     <LogoutIcon />
