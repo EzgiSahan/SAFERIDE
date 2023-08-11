@@ -21,7 +21,7 @@ export const User = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
-          setUserInfo(data);
+          setUserInfo(data.user);
           const role = data.user.role;
           console.log(role);
           if(role === "Admin") {

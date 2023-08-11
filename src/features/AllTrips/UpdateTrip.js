@@ -9,7 +9,12 @@ export default function UpdateTrip({ id }) {
   const [date, setDate] = useState("");
   const [busId, setBusId] = useState("");
   const [driverId, setDriverId] = useState("");
-  const [passenger, setPassenger] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [destination, setDestination] = useState("");
+  const [seats, setSeats] = useState("");
+  const [code, setCode] = useState("");
+
   const [show, setShow] = useState(false);
   const [bus, setBus] = useState([]);
   const [userData, setUserData] = useState([]);
@@ -69,9 +74,12 @@ export default function UpdateTrip({ id }) {
     );
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-      date_started: date,
-      bus_id: busId,
-      passenger: [passenger],
+      code: code,
+      departureDate: departureDate,
+      arrivalDate: arrivalDate,
+      destination: destination,
+      seats: seats,
+      busId: busId,
     });
 
     var requestOptions = {
@@ -100,12 +108,52 @@ export default function UpdateTrip({ id }) {
         <Modal.Body>
           <Form onSubmit={handleUpdate}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Date</Form.Label>
+              <Form.Label>Code</Form.Label>
               <Form.Control
                 placeholder="date"
                 autoFocus
                 onChange={(e) => {
-                  setDate(e.target.value);
+                  setCode(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Departure Date</Form.Label>
+              <Form.Control
+                placeholder="departureDate"
+                autoFocus
+                onChange={(e) => {
+                  setDepartureDate(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Arrival Date</Form.Label>
+              <Form.Control
+                placeholder="arrivalDate"
+                autoFocus
+                onChange={(e) => {
+                  setArrivalDate(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>destination</Form.Label>
+              <Form.Control
+                placeholder="Destination"
+                autoFocus
+                onChange={(e) => {
+                  setDestination(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Seats</Form.Label>
+              <Form.Control
+                placeholder="seats"
+                autoFocus
+                onChange={(e) => {
+                  setSeats(e.target.value);
                 }}
               />
             </Form.Group>
@@ -121,20 +169,9 @@ export default function UpdateTrip({ id }) {
                 label="Bus"
               >
                 {bus.map((item) => (
-                  <MenuItem value={item.bus_id}>{item.bus_model}</MenuItem>
+                  <MenuItem value={item.id}>{item.model}</MenuItem>
                 ))}
               </Select>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Passenger</Form.Label>
-              <Form.Control
-                type="passenger"
-                placeholder="passenger"
-                autoFocus
-                onChange={(e) => {
-                  setPassenger(e.target.value);
-                }}
-              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Save Changes

@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 export const AllTrips = () => {
 
   const [trips, setTrip] = useState([]);
-  let navigate = useNavigate();
-
   const [userData, setUserData] = useState([]);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -50,14 +50,17 @@ export const AllTrips = () => {
         .then(response => response.json())
         .then(result => {
             setTrip(result.trips);
+            console.log(result.trips)
         })
         .catch(error => console.log('error', error));
     }
 }, []);
 
   const deleteTrip = (id) => {
+    const accessToken = localStorage.getItem("accessToken");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
 
     var requestOptions = {
       method: 'DELETE',
@@ -69,7 +72,6 @@ export const AllTrips = () => {
       .then(response => response.json())
       .then(result => {
         window.location.reload();
-        // setTrip(trips.filter(item => item.id !== id));
       })
       .catch(error => console.log('error', error));
   };
@@ -95,22 +97,32 @@ export const AllTrips = () => {
                         <Table size="small">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Started Date</TableCell>
+                                  <TableCell>Code</TableCell>
+                                    <TableCell>Departure Date</TableCell>
+                                    <TableCell>Arrival Date</TableCell>
+                                    <TableCell>Destination</TableCell>
+                                    <TableCell>Country</TableCell>
+                                    <TableCell>City</TableCell>
+                                    <TableCell>Seats</TableCell>
                                     <TableCell>Bus ID</TableCell>
-                                    <TableCell>Passenger</TableCell>
                                     <TableCell>Update</TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {trips?.map((item) => (
-                                <TableRow key={item.trip_id}>
-                                    <TableCell>{item.date_started}</TableCell>
-                                    <TableCell>{item.bus_id}</TableCell>
-                                    <TableCell>{item.passenger}</TableCell>
-                                    <TableCell><UpdateTrip id={item.trip_id}/></TableCell>
+                                <TableRow key={item.id}>
+                                    <TableCell>{item.code}</TableCell>
+                                    <TableCell>{item.departureDate}</TableCell>
+                                    <TableCell>{item.arrivalDate}</TableCell>
+                                    <TableCell>{item.destination}</TableCell>
+                                    <TableCell>{item.country}</TableCell>
+                                    <TableCell>{item.city}</TableCell>
+                                    <TableCell>{item.seats}</TableCell>
+                                    <TableCell>{item.busId}</TableCell>
+                                    <TableCell><UpdateTrip id={item.id}/></TableCell>
                                     <TableCell>
-                                      <Button variant="danger" onClick={() => deleteTrip(item.trip_id)}>
+                                      <Button variant="danger" onClick={() => deleteTrip(item.id)}>
                                         Delete
                                       </Button>
                                     </TableCell>

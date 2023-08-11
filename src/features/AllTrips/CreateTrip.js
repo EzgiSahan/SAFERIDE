@@ -19,10 +19,13 @@ import { AdminDashboard } from "../../components/AdminDashboard";
 const defaultTheme = createTheme();
 
 export const CreateTrip = () => {
-  const [date, setDate] = useState("");
   const [busId, setBusId] = useState("");
   const [driverId, setDriverId] = useState("");
-  const [passenger, setPassenger] = useState("");
+  const [code, setCode] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [destination, setDestination] = useState("");
+  const [seats, setSeats] = useState("");
   const [bus, setBus] = useState([]);
 
   let navigate = useNavigate();
@@ -79,10 +82,12 @@ export const CreateTrip = () => {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      date: date,
+      code: code,
+      departureDate: departureDate,
+      arrivalDate: arrivalDate,
+      destination: destination,
+      seats: seats,
       busId: busId,
-      driverId: driverId,
-      passenger: [passenger],
     });
 
     var requestOptions = {
@@ -137,13 +142,37 @@ export const CreateTrip = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="Date"
+                        name="Departure Date"
                         required
                         fullWidth
-                        id="JoinDate"
-                        label="Join Date"
+                        id="Departure"
+                        label="Departure Date"
                         onChange={(e) => {
-                          setDate(e.target.value);
+                          setDepartureDate(e.target.value);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="Arrival Date"
+                        required
+                        fullWidth
+                        id="ArrivalDate"
+                        label="Arrival Date"
+                        onChange={(e) => {
+                          setArrivalDate(e.target.value);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="Destination"
+                        required
+                        fullWidth
+                        id="Destination"
+                        label="Destination"
+                        onChange={(e) => {
+                          setDestination(e.target.value);
                         }}
                       />
                     </Grid>
@@ -162,10 +191,10 @@ export const CreateTrip = () => {
                           label="Bus"
                         >
                           {bus.map((item) => (
-                            <MenuItem value={item.bus_id}>
-                              {item.bus_model}
+                            <MenuItem value={item.id}>
+                              {item.model}
                             </MenuItem>
-                          ))}
+                          ))} 
                         </Select>
                       </FormControl>
                     </Grid>
@@ -173,11 +202,11 @@ export const CreateTrip = () => {
                       <TextField
                         required
                         fullWidth
-                        id="Passenger"
-                        label="Passenger"
-                        name="Passenger"
+                        id="Seats"
+                        label="Seats"
+                        name="Seats"
                         onChange={(e) => {
-                          setPassenger(e.target.value);
+                          setSeats(e.target.value);
                         }}
                       />
                     </Grid>

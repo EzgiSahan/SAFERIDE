@@ -3,7 +3,11 @@ import {
   Container,
   createTheme,
   CssBaseline,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Toolbar,
   Typography,
@@ -12,26 +16,28 @@ import { React, useEffect, useState } from "react";
 import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
-import { validateEmail } from "../../utils/validateEmail";
 const defaultTheme = createTheme();
 
-export const CreateCompanie = () => {
-  const [name, setName] = useState("");
-  const [joinedDate, setJoinedDate] = useState("");
+export const CreateCompanyAdmin = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const [emailError, setEmailError] = useState("");
-
+  const [birthdate, setBirthdate] = useState("");
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [companyId, setCompanyId] = useState("");
+  const [company, setCompany] = useState([]);
   const [userData, setUserData] = useState([]);
 
   let navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+
     if (accessToken) {
       fetch("http://localhost:8000/api/users/me", {
         method: "GET",
@@ -52,23 +58,43 @@ export const CreateCompanie = () => {
         .catch((error) => {
           console.error("Error fetching user information:", error);
         });
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:8000/api/company/", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setCompany(result.company);
+        })
+        .catch((error) => {
+          console.log("Error fetching bus information:", error);
+        });
     }
   }, []);
 
-  const handelSubmit = () => {
-    const accessToken = localStorage.getItem("accessToken");
+  const handleSubmit = () => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      name: name,
-      joinedDate: joinedDate,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       phone: phone,
       country: country,
       city: city,
       address: address,
+      birthdate: birthdate,
+      role: role,
+      password: password,
+      companyId: companyId,
     });
 
     var requestOptions = {
@@ -78,13 +104,11 @@ export const CreateCompanie = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:8000/api/company/", requestOptions)
+    fetch("http://localhost:8000/api/companyAdmin/", requestOptions)
       .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
+      .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-    navigate("/all-companies");
+    navigate("/all-companyAdmin");
   };
 
   return (
@@ -119,55 +143,77 @@ export const CreateCompanie = () => {
                 }}
               >
                 <Typography component="h1" variant="h5">
-                  Create Company
+                  Create Company Admin
                 </Typography>
-                <Box component="form" onSubmit={handelSubmit} sx={{ mt: 3 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="FirstName"
+                        name="Departure Date"
                         required
                         fullWidth
                         id="FirstName"
-                        label="Name"
+                        label="First Name"
                         onChange={(e) => {
-                          setName(e.target.value);
+                          setFirstName(e.target.value);
                         }}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        name="Last Name"
                         required
                         fullWidth
-                        id="JoinDate"
-                        label="Join Date"
-                        name="JoinDate"
+                        id="LastName"
+                        label="Last Name"
                         onChange={(e) => {
-                          setJoinedDate(e.target.value);
+                          setLastName(e.target.value);
                         }}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="Email"
+                        name="LAst Name"
                         required
                         fullWidth
-                        type="Email"
-                        id="Email"
+                        id="email"
                         label="Email"
                         onChange={(e) => {
-                          setEmailError(validateEmail(e));
                           setEmail(e.target.value);
                         }}
                       />
-                      {emailError && <h6>{emailError}</h6>}
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="Country"
+                        name="LAst Name"
                         required
                         fullWidth
-                        id="Country"
+                        id="password"
+                        type={password}
+                        label="Password"
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="LAst Name"
+                        required
+                        fullWidth
+                        id="phone"
+                        label="Phone"
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="Arrival Date"
+                        required
+                        fullWidth
+                        id="country"
                         label="Country"
                         onChange={(e) => {
                           setCountry(e.target.value);
@@ -176,10 +222,10 @@ export const CreateCompanie = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="City"
+                        name="Destination"
                         required
                         fullWidth
-                        type="City"
+                        id="city"
                         label="City"
                         onChange={(e) => {
                           setCity(e.target.value);
@@ -188,10 +234,10 @@ export const CreateCompanie = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="Address"
+                        name="Country"
                         required
                         fullWidth
-                        id="Address"
+                        id="address"
                         label="Address"
                         onChange={(e) => {
                           setAddress(e.target.value);
@@ -200,16 +246,46 @@ export const CreateCompanie = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="Phone"
+                        name="City"
                         required
                         fullWidth
-                        type="tel"
-                        id="Phone"
-                        label="Phone"
+                        id="birthDate"
+                        label="Birth Date"
                         onChange={(e) => {
-                          setPhone(e.target.value);
+                          setBirthdate(e.target.value);
                         }}
                       />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        name="role"
+                        required
+                        fullWidth
+                        id="role"
+                        label="Role"
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Company
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          onChange={(e) => {
+                            setCompanyId(e.target.value);
+                          }}
+                          label="Bus"
+                        >
+                          {company.map((item) => (
+                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                   </Grid>
                   <Button variant="primary" type="submit">
