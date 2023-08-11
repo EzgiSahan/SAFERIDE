@@ -25,6 +25,10 @@ import { AddChildren } from './features/AllUsers/AddChildren';
 import { BusRegisteration } from './features/TripModule';
 import { AllCompanyAdmin } from './features/AllCompanyAdmin/AllCompanyAdmin';
 import { CreateCompanyAdmin } from './features/AllCompanyAdmin/CreateCompanyAdmin';
+import { AllBuses } from './features/AllBuses/AllBuses';
+import { CreateBus } from './features/AllBuses/CreateBus';
+import { AllBusDrivers } from './features/AllBusDrivers/AllBusDrivers';
+import { CreateBusDriver } from './features/AllBusDrivers/CreateBusDriver';
 
 const App = () => {
   return (
@@ -56,6 +60,10 @@ const App = () => {
           <Route path='/register-trip' element={<BusRegisteration/>} />
           <Route path='/all-companyAdmin' element={<AllCompanyAdmin/>} />
           <Route path='/create-companyAdmin' element={<CreateCompanyAdmin/>} />
+          <Route path='/all-buses' element={<AllBuses/>} />
+          <Route path='/create-bus' element={<CreateBus/>} />
+          <Route path='/all-busDrivers' element={<AllBusDrivers/>} />
+          <Route path='/create-busDriver' element={<CreateBusDriver/>} />
           {/* To route to any path that you want we use the * sign in the paths along with the component */}
           <Route path="*" element={<Home/>} />
         </Routes>
