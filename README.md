@@ -1,6 +1,11 @@
 # Safe Ride Frontend
-MUI
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bus Transportation Service that you can depend on. Providing convenience for you and your family!
+
+## About the Project
+
+This project was created with [Create React App](https://github.com/facebook/create-react-app). Create React App is a tool developed by Facebook that enables quick initialization of React-based applications.
+
+This project is also developed using the [Material-UI](https://mui.com/) library. Material-UI is a React component library that provides modern and stylish interface elements following Google's Material Design guidelines. You can utilize Material-UI components to give your project an aesthetic and user-friendly appearance.
 
 ## Before Running: Modules Installation
 You have to install the node modules before running the app using the command
