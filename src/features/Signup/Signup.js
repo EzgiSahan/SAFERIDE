@@ -16,6 +16,9 @@ import { validateEmail } from '../../utils/validateEmail';
 import { validatePassword } from '../../utils/validatePassword';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const defaultTheme = createTheme();
 
@@ -27,17 +30,17 @@ export const Signup = () => {
     const [city, setCity] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
-    const [role, setRole] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [value, setValue] = useState('');
+
 
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const handleSubmit = () => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZ2dlcnNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJtZXJvNDUxIiwiaWF0IjoxNjg5NzcyMjkwLCJleHAiOjE2ODk3NzU4OTB9.W3eWhLVMLSa8d6KWF_MkL61dTvVnA6bZsratulZbMMY");
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
@@ -46,7 +49,7 @@ export const Signup = () => {
             email: email,
             phone: phone,
             password: password,
-            role: role,
+            role: "Normal",
             country: country,
             city: city,
             address: address,
@@ -84,7 +87,7 @@ export const Signup = () => {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -136,7 +139,7 @@ export const Signup = () => {
                         onChange={(e)=>{
                             setAddress(e.target.value);}}/>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={12}>
                         <TextField
                         name="Phone"
                         required
@@ -147,26 +150,13 @@ export const Signup = () => {
                         onChange={(e)=>{
                             setPhone(e.target.value);}}/>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                        name="Role"
-                        required
-                        fullWidth
-                        type='role'
-                        id="Role"
-                        label="Role"
-                        onChange={(e)=>{
-                            setRole(e.target.value);}}/>
-                    </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                        required
-                        fullWidth
-                        id="BirthDate"
-                        label="Birth Date"
-                        name="BirthDate"
-                        onChange={(e)=>{
-                            setBirthDate(e.target.value);}}/>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setBirthDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -203,6 +193,7 @@ export const Signup = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
+                onClick={handleSubmit}
                 sx={{ mt: 3, mb: 2, borderRadius:2, fontWeight:600,textTransform:'capitalize'}}>
                 Sign Up
                 </Button>

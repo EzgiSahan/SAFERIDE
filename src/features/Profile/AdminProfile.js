@@ -51,6 +51,9 @@ export const AdminProfile = ({id}) => {
           console.error("Error fetching user information:", error);
         });
     }
+    else{
+      navigate("/login");
+    }
   }, []);
 
   const handleUpdate = () => {

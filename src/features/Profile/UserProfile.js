@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validateEmail";
 import { validatePassword } from "../../utils/validatePassword";
 import UpdateChildModal from "../../components/UpdateChildModal";
 import { Box, Container, Grid, TextField, Toolbar,Button} from "@mui/material";
 import { UserDashboard } from "../../components/UserDashboard";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export const UserProfile = ({id}) => {
   const [name, setName] = useState("");
@@ -15,11 +19,43 @@ export const UserProfile = ({id}) => {
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [value, setValue] = useState('');
+
 
   let navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  console.log(birthDate);
+  
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          const role = data.user.role;
+          console.log(role);
+          if(role === "Admin") {
+            navigate('/admin')
+          }
+        })
+        .catch((error) => {
+          localStorage.clear();
+          navigate('/login');
+        });
+    } 
+    else{
+      navigate("/login");
+    }
+  }, []);
 
   const handleUpdate = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -55,9 +91,6 @@ export const UserProfile = ({id}) => {
     navigate('/user');});
   }
 
-/*   const handleSubmit = () => {
-    navigate('/user')
-  }; */
 
   return (
     <Box
@@ -161,7 +194,7 @@ export const UserProfile = ({id}) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   required
                   fullWidth
                   id="BirthDate"
@@ -171,7 +204,13 @@ export const UserProfile = ({id}) => {
                   onChange={(e) => {
                     setBirthDate(e.target.value);
                   }}
-                />
+                /> */}
+                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setBirthDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
               </Grid>
             </Grid>
             <div className="submit-cont">

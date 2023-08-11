@@ -33,6 +33,9 @@ export const User = () => {
           navigate('/login');
         });
     } 
+    else{
+      navigate("/login");
+    }
   }, []);
 
   return (

@@ -19,6 +19,11 @@ export const BusRegisteration = () => {
   const [activeStep, setActiveStep] = React.useState(0);  
   const [trips,setTrips] = useState([]);
   const [selectedTrip, setSelectedTrip] = useState({});
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeatsCount, setSelectedSeatsCount] = useState(0);
+  
+  console.log(selectedSeats);
+  console.log(selectedSeatsCount);
 
 
   
@@ -91,6 +96,10 @@ export const BusRegisteration = () => {
 
   function onTripCardClick(data) {
     setSelectedTrip(data);
+  }
+  function onChangeSeats(data,count){
+    setSelectedSeats(data);
+    setSelectedSeatsCount(count);
   }
   
   return (
@@ -171,13 +180,15 @@ export const BusRegisteration = () => {
                     }   
                     {
                       index === 2 &&
-                      <TripSeats data={Object.keys(selectedTrip).length == 0 ? "empty" : selectedTrip}/>
+                      <TripSeats changeSeats={onChangeSeats} children={selectedChildren.length === 0 ? "empty" : selectedChildren} data={Object.keys(selectedTrip).length == 0 ? "empty" : selectedTrip}/>
                     }
                     <Box sx={{ mb: 2 }}>
                       <div>
+                        
                         <Button
                           variant="contained"
                           onClick={handleNext}
+                          disabled={index === 0 ? selectedChildren.length === 0 : index === 1 ? Object.keys(selectedTrip).length == 0 : index === 2 && selectedSeatsCount === 0 }
                           sx={{ mt: 1, mr: 1 }}
                         >
                           {index === steps.length - 1 ? 'Finish' : 'Continue'}
