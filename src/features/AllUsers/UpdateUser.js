@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { Toolbar } from "@mui/material";
+import { Grid, Toolbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function UpdateUser({ id }) {
   const [name, setName] = useState("");
@@ -22,6 +25,8 @@ export default function UpdateUser({ id }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userData, setUserData] = useState([]);
+  const [value, setValue] = useState('');
+
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -202,6 +207,14 @@ export default function UpdateUser({ id }) {
                 }}
               />
             </Form.Group>
+            <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
+                    </Grid>
             <Button variant="primary" type="submit">
               Save Changes
             </Button>

@@ -13,6 +13,10 @@ import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
 import { validateEmail } from "../../utils/validateEmail";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 const defaultTheme = createTheme();
 
 export const CreateUser = () => {
@@ -26,6 +30,8 @@ export const CreateUser = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [date, setDate] = useState("");
+  const [value, setValue] = useState('');
+
 
   const [emailError, setEmailError] = useState("");
   const [userData, setUserData] = useState([]);
@@ -249,6 +255,14 @@ export const CreateUser = () => {
                           setDate(e.target.value);
                         }}
                       />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
                     </Grid>
                   </Grid>
                   <Button variant="primary" type="submit" size="lg">

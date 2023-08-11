@@ -16,6 +16,10 @@ import { React, useEffect, useState } from "react";
 import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 const defaultTheme = createTheme();
 
 export const CreateTrip = () => {
@@ -26,6 +30,8 @@ export const CreateTrip = () => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [destination, setDestination] = useState("");
   const [seats, setSeats] = useState("");
+  const [value, setValue] = useState('');
+
   const [bus, setBus] = useState([]);
 
   let navigate = useNavigate();
@@ -153,6 +159,14 @@ export const CreateTrip = () => {
                       />
                     </Grid>
                     <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setDepartureDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={12}>
                       <TextField
                         name="Arrival Date"
                         required
@@ -163,6 +177,14 @@ export const CreateTrip = () => {
                           setArrivalDate(e.target.value);
                         }}
                       />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setArrivalDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField

@@ -16,6 +16,10 @@ import { React, useEffect, useState } from "react";
 import { Button, ThemeProvider } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AdminDashboard } from "../../components/AdminDashboard";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 const defaultTheme = createTheme();
 
 export const CreateCompanyAdmin = () => {
@@ -30,6 +34,7 @@ export const CreateCompanyAdmin = () => {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [companyId, setCompanyId] = useState("");
+  const [value, setValue] = useState('');
   const [company, setCompany] = useState([]);
   const [userData, setUserData] = useState([]);
 
@@ -255,6 +260,14 @@ export const CreateCompanyAdmin = () => {
                           setBirthdate(e.target.value);
                         }}
                       />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setBirthdate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField

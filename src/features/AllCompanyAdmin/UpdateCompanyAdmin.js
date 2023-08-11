@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
+import { Grid, InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export default function UpdateCompanyAdmin({ id }) {
     const [firstName, setFirstName] = useState("");
@@ -21,6 +25,7 @@ export default function UpdateCompanyAdmin({ id }) {
     const [emailError, setEmailError] = useState("");
     const [userData, setUserData] = ([]);
     const [show, setShow] = useState(false);
+    const [value, setValue] = useState('');
 
   let navigate = useNavigate();
 
@@ -202,6 +207,14 @@ export default function UpdateCompanyAdmin({ id }) {
                 }}
               />
             </Form.Group>
+            <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setBirthdate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
+                    </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Role</Form.Label>
               <Form.Control

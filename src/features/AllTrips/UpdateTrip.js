@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
+import { Grid, InputLabel, MenuItem, Select, Toolbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function UpdateTrip({ id }) {
   const [date, setDate] = useState("");
@@ -18,6 +21,8 @@ export default function UpdateTrip({ id }) {
   const [show, setShow] = useState(false);
   const [bus, setBus] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [value, setValue] = useState('');
+
 
   let navigate = useNavigate();
 
@@ -127,6 +132,14 @@ export default function UpdateTrip({ id }) {
                 }}
               />
             </Form.Group>
+            <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setDepartureDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
+                    </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Arrival Date</Form.Label>
               <Form.Control
@@ -137,6 +150,14 @@ export default function UpdateTrip({ id }) {
                 }}
               />
             </Form.Group>
+            <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setArrivalDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Birth Date" />
+                      </LocalizationProvider>
+                    </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>destination</Form.Label>
               <Form.Control

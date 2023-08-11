@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { Toolbar } from "@mui/material";
+import { Grid, Toolbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function UpdateCompanie({ id }) {
   const [name, setName] = useState("");
@@ -14,6 +17,7 @@ export default function UpdateCompanie({ id }) {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [show, setShow] = useState(false);
+  const [value, setValue] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -111,6 +115,14 @@ export default function UpdateCompanie({ id }) {
                 }}
               />
             </Form.Group>
+            <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                            setValue(newValue);
+                            setJoinedDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                            }} label="Joined Date" />
+                      </LocalizationProvider>
+                    </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email</Form.Label>
               <Form.Control
