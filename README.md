@@ -1,11 +1,11 @@
 # Safe Ride Frontend
-
+MUI
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Before Running: Modules Installation
 You have to install the node modules before running the app using the command
 #
-     `npm install`
+     npm install
 
 ## Running the App
 
