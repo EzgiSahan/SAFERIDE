@@ -8,7 +8,6 @@ export const TripSeats = ({data,children,changeSeats}) => {
     seats[20] = "asdff";
     const [selectedSeats, setSelectedSeats] = useState(seats);
     const [seatCounter, setSeatCounter] = useState(0);
-    console.log(children);
     
   return (
     <div className='container'>
@@ -24,7 +23,7 @@ export const TripSeats = ({data,children,changeSeats}) => {
 
 
         </Typography>
-        <Typography marginTop={4} marginBottom={5} width={460} overflow={'scroll'} className='border rounded-3 border-dark p-3'>
+        <Typography marginTop={4} marginBottom={5} minWidth={460} maxWidth={460} overflow={'scroll'} className='border rounded-3 border-dark p-3'>
             { selectedSeats !== {} &&
                Object.keys(selectedSeats).map((item)=>(
                 <>

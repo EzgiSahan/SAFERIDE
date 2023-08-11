@@ -4,25 +4,24 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
-
-export default function TripTicket() {
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+export default function TripTicket({child,trip}) {
   return (
-    <Card orientation="horizontal" variant="outlined" sx={{ width: 300  }}>
+    <Card orientation="horizontal" variant="outlined" sx={{ width: 370  }}>
       <CardOverflow>
-        <AspectRatio ratio="1" sx={{ width: 90 }}>
-          <img
-            src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
-            srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
+        <AspectRatio color='info' ratio="1" sx={{ width: 110 }}>
+          <DirectionsBusIcon/>
         </AspectRatio>
       </CardOverflow>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
-          Yosemite Park
+        {trip.destination}
         </Typography>
-        <Typography level="body-sm">California, USA</Typography>
+        <Typography level="body-sm"> Passenger: <b>{child.firstName + " " + child.lastName}</b>
+        </Typography>
+        <Typography level="body-sm" fontWeight={600}>{Object.keys(trip).length >0  ? (trip.city+ ", "+ trip.country) : ""}</Typography>
+
+
       </CardContent>
       <CardOverflow
         variant="soft"

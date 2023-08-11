@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { TripCard } from "./common/TripCard";
 import { TripSeats } from "./common/TripSeats";
+import { useNavigate } from "react-router-dom";
 
 export const BusRegisteration = () => {
   const [children,setChildren] = useState([]);
@@ -21,12 +22,8 @@ export const BusRegisteration = () => {
   const [selectedTrip, setSelectedTrip] = useState({});
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedSeatsCount, setSelectedSeatsCount] = useState(0);
-  
-  console.log(selectedSeats);
-  console.log(selectedSeatsCount);
-
-
-  
+  const [userData,setUserData] = useState({})
+  let navigate = useNavigate();
   const steps = [
     {
       label: 'Choose the children that will go on the trip',
@@ -52,6 +49,29 @@ export const BusRegisteration = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+  const onFinish = (childId) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "type": "Booking",
+      "tripId": selectedTrip.id,
+      "childId": childId,
+      "userId": userData.id
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8000/api/transactions/", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   };
 
   
@@ -93,7 +113,36 @@ export const BusRegisteration = () => {
         .catch(error => console.log('error', error));
   }, []);
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
 
+    if (accessToken) {
+        fetch("http://localhost:8000/api/users/me", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            const role = data.user.role;
+            
+            if (role === 'Normal') {
+                navigate('/user');
+            }
+            
+            console.log(role);
+            setUserData(data.user);
+        })
+        .catch((error) => {
+            console.error("Error fetching user information:", error);
+        });
+      }
+      else{
+        navigate('/user');
+      }
+    },[])
   function onTripCardClick(data) {
     setSelectedTrip(data);
   }
@@ -129,7 +178,7 @@ export const BusRegisteration = () => {
                    Trip registration
                 </Typography>
               </Grid>
-              <Grid xs={12} lg={8} >
+              <Grid xs={12} lg={7} >
               <Stepper sx={{paddingLeft:4, paddingTop:4}} activeStep={activeStep} orientation="vertical">
               {steps.map((step, index) => (
                 <Step key={step.label}>
@@ -184,7 +233,6 @@ export const BusRegisteration = () => {
                     }
                     <Box sx={{ mb: 2 }}>
                       <div>
-                        
                         <Button
                           variant="contained"
                           onClick={handleNext}
@@ -212,11 +260,25 @@ export const BusRegisteration = () => {
                 <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
                   Reset
                 </Button>
+                <Button
+                          variant="contained"
+                          onClick={handleNext}
+                          sx={{ mt: 1, mr: 1 }}
+                        >
+                            Book tickets
+                        </Button>
               </Paper>
             )}
               </Grid>
-              <Grid xs={12} lg={4} marginTop={10}>
-              <TripTicket/>
+              <Grid borderLeft={1} borderColor={'gray'} paddingLeft={3} xs={12} lg={5} marginTop={3}>
+                <Typography variant="h5" className="mb-5" fontWeight={600}>Your Children's Tickets</Typography>
+                {
+                  selectedChildren.map((item)=>(
+
+                    <TripTicket child={item} trip={selectedTrip}/>
+
+                  ))
+                }
               </Grid>
 
             </Grid>
