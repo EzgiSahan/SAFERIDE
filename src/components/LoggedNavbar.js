@@ -10,6 +10,8 @@ import BusinessIcon from '@mui/icons-material/Business';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+
 
 import DirectionsBusFilledIcon from '@mui/icons-material/DirectionsBusFilled';
 export const UserNavbar = (
@@ -90,6 +92,18 @@ export const AdminNavbar = (
                 <CommuteIcon />
             </ListItemIcon>
             <ListItemText primary="Company Admins" />
+        </ListItemButton>
+        <ListItemButton href='/all-buses'>
+            <ListItemIcon>
+                <SupervisorAccountIcon />
+            </ListItemIcon>
+            <ListItemText primary="Buses" />
+        </ListItemButton>
+        <ListItemButton href='/all-busDrivers'>
+            <ListItemIcon>
+                <CommuteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bus Drivers" />
         </ListItemButton>
         <ListItemButton onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
                 <ListItemIcon>
