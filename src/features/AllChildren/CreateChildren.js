@@ -209,7 +209,7 @@ export const CreateChildren = () => {
                       </FormControl>
                     </Grid>
                   </Grid>
-                  <Button variant="primary" type="submit">
+                  <Button className="mt-3 mb-5 w-100" variant="primary" type="submit">
                     Create
                   </Button>
                 </Box>

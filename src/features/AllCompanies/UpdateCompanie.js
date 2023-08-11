@@ -104,17 +104,6 @@ export default function UpdateCompanie({ id }) {
                 }}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Joined Date</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="date"
-                autoFocus
-                onChange={(e) => {
-                  setJoinedDate(e.target.value);
-                }}
-              />
-            </Form.Group>
             <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
@@ -123,7 +112,7 @@ export default function UpdateCompanie({ id }) {
                             }} label="Joined Date" />
                       </LocalizationProvider>
                     </Grid>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
@@ -178,9 +167,9 @@ export default function UpdateCompanie({ id }) {
                 }}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
+            <Button className="mt-3 mb-5 w-100" variant="primary" type="submit">
+                    Save Changes
+              </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>

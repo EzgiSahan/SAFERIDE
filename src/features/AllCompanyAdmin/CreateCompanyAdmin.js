@@ -250,36 +250,12 @@ export const CreateCompanyAdmin = () => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        name="City"
-                        required
-                        fullWidth
-                        id="birthDate"
-                        label="Birth Date"
-                        onChange={(e) => {
-                          setBirthdate(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
                             setBirthdate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
                             }} label="Birth Date" />
                       </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        name="role"
-                        required
-                        fullWidth
-                        id="role"
-                        label="Role"
-                        onChange={(e) => {
-                          setRole(e.target.value);
-                        }}
-                      />
                     </Grid>
                     <Grid item xs={12}>
                       <FormControl fullWidth>
@@ -301,7 +277,7 @@ export const CreateCompanyAdmin = () => {
                       </FormControl>
                     </Grid>
                   </Grid>
-                  <Button variant="primary" type="submit">
+                  <Button className="mt-3 mb-5 w-100" variant="primary" type="submit">
                     Create
                   </Button>
                 </Box>

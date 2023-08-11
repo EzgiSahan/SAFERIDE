@@ -103,7 +103,6 @@ export const AllTrips = () => {
                                     <TableCell>Destination</TableCell>
                                     <TableCell>Country</TableCell>
                                     <TableCell>City</TableCell>
-                                    <TableCell>Seats</TableCell>
                                     <TableCell>Bus ID</TableCell>
                                     <TableCell>Update</TableCell>
                                     <TableCell>Delete</TableCell>
@@ -118,7 +117,6 @@ export const AllTrips = () => {
                                     <TableCell>{item.destination}</TableCell>
                                     <TableCell>{item.country}</TableCell>
                                     <TableCell>{item.city}</TableCell>
-                                    <TableCell>{item.seats}</TableCell>
                                     <TableCell>{item.busId}</TableCell>
                                     <TableCell><UpdateTrip id={item.id}/></TableCell>
                                     <TableCell>

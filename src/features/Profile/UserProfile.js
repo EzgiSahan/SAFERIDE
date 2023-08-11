@@ -20,6 +20,7 @@ export const UserProfile = ({id}) => {
   const [birthDate, setBirthDate] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [value, setValue] = useState('');
+  const [userData, setUserData] = useState('');
 
 
   let navigate = useNavigate();
@@ -40,12 +41,11 @@ export const UserProfile = ({id}) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
           const role = data.user.role;
-          console.log(role);
           if(role === "Admin") {
             navigate('/admin')
           }
+          setUserData(data.user);
         })
         .catch((error) => {
           localStorage.clear();
@@ -77,7 +77,7 @@ export const UserProfile = ({id}) => {
         body: raw,
         redirect: 'follow'
     };
-    fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+    fetch(`http://localhost:8000/api/users/${userData.id}`, requestOptions)
     .then(response => response.json())
     .then(result => {
       const role = result.user.role;
@@ -194,17 +194,6 @@ export const UserProfile = ({id}) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                {/* <TextField
-                  required
-                  fullWidth
-                  id="BirthDate"
-                  label="Birth Date"
-                  name="BirthDate"
-                  value={birthDate}
-                  onChange={(e) => {
-                    setBirthDate(e.target.value);
-                  }}
-                /> */}
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);

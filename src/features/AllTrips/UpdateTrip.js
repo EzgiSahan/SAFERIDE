@@ -122,40 +122,24 @@ export default function UpdateTrip({ id }) {
                 }}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Departure Date</Form.Label>
-              <Form.Control
-                placeholder="departureDate"
-                autoFocus
-                onChange={(e) => {
-                  setDepartureDate(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Grid item xs={12}>
+            <Grid className="mb-3" item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
                             setDepartureDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
-                            }} label="Birth Date" />
+                            }} label="Departure Date" />
                       </LocalizationProvider>
                     </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Arrival Date</Form.Label>
-              <Form.Control
-                placeholder="arrivalDate"
-                autoFocus
-                onChange={(e) => {
-                  setArrivalDate(e.target.value);
-                }}
-              />
+
             </Form.Group>
             <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
                             setArrivalDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
-                            }} label="Birth Date" />
+                            }} label="Arrival Date" />
                       </LocalizationProvider>
                     </Grid>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

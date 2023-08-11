@@ -196,17 +196,6 @@ export default function UpdateCompanyAdmin({ id }) {
                 }}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Birth Date</Form.Label>
-              <Form.Control
-                placeholder="birthDate"
-                autoFocus
-                value={birthdate}
-                onChange={(e) => {
-                  setBirthdate(e.target.value);
-                }}
-              />
-            </Form.Group>
             <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
@@ -241,6 +230,7 @@ export default function UpdateCompanyAdmin({ id }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <InputLabel id="demo-simple-select-label">Company</InputLabel>
               <Select
+               className="w-100"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={(e) => {

@@ -11,7 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-
+import DirectionsBusFilledIcon from '@mui/icons-material/DirectionsBusFilled';
 export const UserNavbar = (
     <React.Fragment>
         <ListItemButton href='/user'>
@@ -31,6 +31,12 @@ export const UserNavbar = (
                 <FamilyRestroomIcon />
             </ListItemIcon>
             <ListItemText primary="Children" />
+        </ListItemButton>
+        <ListItemButton href='/register-trip'>
+            <ListItemIcon>
+                <DirectionsBusFilledIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Register on Bus" />
         </ListItemButton>
         <ListItemButton onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
             <ListItemIcon>

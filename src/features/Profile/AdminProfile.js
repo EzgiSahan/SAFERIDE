@@ -4,6 +4,10 @@ import { validateEmail } from "../../utils/validateEmail";
 import { validatePassword } from "../../utils/validatePassword";
 import UpdateChildModal from "../../components/UpdateChildModal";
 import { AdminDashboard } from "../../components/AdminDashboard";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import {
   Box,
   Container,
@@ -25,6 +29,8 @@ export const AdminProfile = ({id}) => {
   const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [userData, setUserData] = useState([]);
+  const [value, setValue] = useState('');
+
 
   let navigate = useNavigate();
 
@@ -39,12 +45,10 @@ export const AdminProfile = ({id}) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           const role = data.user.role;
           if (role === "Normal") {
             navigate("/user");
           }
-          console.log(data.user.user_id);
           setUserData(data.user);
         })
         .catch((error) => {
@@ -76,11 +80,10 @@ export const AdminProfile = ({id}) => {
       body: raw,
       redirect: "follow",
     };
-    fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+    fetch(`http://localhost:8000/api/users/${userData.id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        const id = result.user.user_id
       })
       .catch((error) => {
         localStorage.clear();
@@ -201,17 +204,12 @@ export const AdminProfile = ({id}) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  value={birthDate}
-                  id="BirthDate"
-                  label="Birth Date"
-                  name="BirthDate"
-                  onChange={(e) => {
-                    setBirthDate(e.target.value);
-                  }}
-                />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
+                      setValue(newValue);
+                      setBirthDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
+                      }} label="Birth Date" />
+                </LocalizationProvider>
               </Grid>
             </Grid>
             <div className="submit-cont">

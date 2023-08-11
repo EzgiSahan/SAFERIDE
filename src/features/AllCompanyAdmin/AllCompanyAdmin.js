@@ -120,7 +120,6 @@ export const AllCompanyAdmin = () => {
                       <TableCell>City</TableCell>
                       <TableCell>Address</TableCell>
                       <TableCell>Birth Date</TableCell>
-                      <TableCell>Role</TableCell>
                       <TableCell>Update</TableCell>
                       <TableCell>Delete</TableCell>
                     </TableRow>
@@ -136,7 +135,6 @@ export const AllCompanyAdmin = () => {
                         <TableCell>{item.city}</TableCell>
                         <TableCell>{item.address}</TableCell>
                         <TableCell>{item.birthdate}</TableCell>
-                        <TableCell>{item.role}</TableCell>
                         <TableCell>
                           <UpdateCompanyAdmin id={item.id} />
                         </TableCell>

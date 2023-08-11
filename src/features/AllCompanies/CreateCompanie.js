@@ -139,18 +139,6 @@ export const CreateCompanie = () => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="JoinDate"
-                        label="Join Date"
-                        name="JoinDate"
-                        onChange={(e) => {
-                          setJoinedDate(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
@@ -223,7 +211,7 @@ export const CreateCompanie = () => {
                       />
                     </Grid>
                   </Grid>
-                  <Button variant="primary" type="submit">
+                  <Button className="mt-3 mb-5 w-100" variant="primary" type="submit">
                     Create
                   </Button>
                 </Box>

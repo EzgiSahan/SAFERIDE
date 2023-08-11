@@ -80,6 +80,9 @@ export const CreateTrip = () => {
           console.log("Error fetching bus information:", error);
         });
     }
+    else{
+      navigate('/login')
+    }
 }, []);
 
 
@@ -92,7 +95,6 @@ export const CreateTrip = () => {
       departureDate: departureDate,
       arrivalDate: arrivalDate,
       destination: destination,
-      seats: seats,
       busId: busId,
     });
 
@@ -147,43 +149,19 @@ export const CreateTrip = () => {
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <TextField
-                        name="Departure Date"
-                        required
-                        fullWidth
-                        id="Departure"
-                        label="Departure Date"
-                        onChange={(e) => {
-                          setDepartureDate(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
                             setDepartureDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
-                            }} label="Birth Date" />
+                            }} label="Departure Date" />
                       </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        name="Arrival Date"
-                        required
-                        fullWidth
-                        id="ArrivalDate"
-                        label="Arrival Date"
-                        onChange={(e) => {
-                          setArrivalDate(e.target.value);
-                        }}
-                      />
                     </Grid>
                     <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker sx={{width:'100%'}} onChange={(newValue)=>{
                             setValue(newValue);
                             setArrivalDate(newValue.$d.toISOString().slice(0, 19).replace("T", " "));
-                            }} label="Birth Date" />
+                            }} label="Arrival Date" />
                       </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
@@ -220,20 +198,8 @@ export const CreateTrip = () => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="Seats"
-                        label="Seats"
-                        name="Seats"
-                        onChange={(e) => {
-                          setSeats(e.target.value);
-                        }}
-                      />
-                    </Grid>
                   </Grid>
-                  <Button variant="primary" type="submit">
+                  <Button className="mt-3 mb-5 w-100" variant="primary" type="submit">
                     Create
                   </Button>
                 </Box>
